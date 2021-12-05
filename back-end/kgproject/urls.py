@@ -19,7 +19,6 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('test/', views.test, name='test'),
     path('uploadentity/', views.upload_entity, name='upload_entity'),
     path('uploadrelation/', views.upload_relation, name='upload_relation'),
 ]
