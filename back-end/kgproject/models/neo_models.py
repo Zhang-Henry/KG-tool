@@ -1,11 +1,12 @@
+import pandas as pd
+from kgproject import config
+from py2neo import Graph, GraphService
+import os
 import sys
 
 from py2neo.data import Entity
 sys.path.append("..")
-import os
-from py2neo import Graph, Node, Relationship, cypher, Path
-from kgproject import config
-import pandas as pd
+
 
 class Neo4j():
     graph = None
@@ -51,15 +52,60 @@ class Neo4j():
         print(command)
         self.graph.run(command)
 
-    def return_data(self):
-        # MATCH p=()-[r:RELATION]->()
+    def query_all_nodes_relations_labels(self):
+        # command = """MATCH p=()-[r:RELATION]->()
         # WITH COLLECT(p) AS ps
         # CALL apoc.convert.toTree(ps) yield value
-        # RETURN value
-        command = """MATCH p=()-[r:RELATION]->()
-        WITH COLLECT(p) AS ps
-        CALL apoc.convert.toTree(ps) yield value
-        RETURN value"""
-        data = self.graph.run(command).data()
-        print(data)
-        return data
+        # RETURN value"""
+        # command2 = """CALL apoc.schema.nodes()
+        # YIELD name, label, properties, status, type"""
+        command1 = "CALL apoc.schema.nodes()"
+        schema = self.graph.run(command1).data()
+        all_info = {}
+        entitys = []
+        links = []
+        pks = []
+        labels = []
+        for entity in schema:
+            label = entity['label']
+            pk = entity['properties'][0]
+            pks.append(pk)
+            command = """CALL apoc.search.nodeAll('{{{0}:"{1}"}}','contains','') YIELD node AS n RETURN n""".format(
+                label, pk)
+            data = self.graph.run(command).data()
+            for p in data:
+                entity_new = {}
+                entity_new['name'] = p['n'][pk]
+                properties = []
+                for k, v in p['n'].items():
+                    if k != pk:
+                        properties.append(str(k) + ": " + str(v))
+                des = ", ".join(properties)
+                entity_new['des'] = des
+                entity_new['category'] = label
+                entitys.append(entity_new)
+        all_info['data'] = entitys
+
+        command2 = "MATCH (n)-[r]-(m) RETURN *;"
+        relations = self.graph.run(command2).data()
+        for relation in relations:
+            relation_new = {}
+            for k, v in relation['m'].items():
+                if k in pks:
+                    relation_new['source'] = v
+            for k, v in relation['n'].items():
+                if k in pks:
+                    relation_new['target'] = v
+            relation_new['name'] = relation['r']['type']
+            links.append(relation_new)
+        all_info['links'] = links
+
+        command3 = "match (n) return distinct labels(n)"
+        label_data = self.graph.run(command3).data()
+        for data in label_data:
+            labels.append(data['labels(n)'][0])
+        all_info['labels'] = labels
+
+        # with open("data.json",'w+') as f:
+        #     f.write(str(all_info))
+        return all_info

@@ -35,7 +35,7 @@ def upload_entity(request):
             destination.close()
 
             neo4j = Neo4j()
-            neo4j.saveEntity(req.name) # save entity to neo4j
+            neo4j.saveEntity(req.name)  # save entity to neo4j
 
             response['msg'] = "Success"
             response['code'] = 200
@@ -73,8 +73,9 @@ def upload_relation(request):
         response['code'] = 1
     return HttpResponse(json.dumps(response), content_type="application/json")
 
+
 @csrf_exempt
 def return_kg(request):
     neo4j = Neo4j()
-    kg_data = neo4j.return_data()  # save entity to neo4j
+    kg_data = neo4j.query_all_nodes_relations_labels()  # save entity to neo4j
     return JsonResponse(kg_data, safe=False)
