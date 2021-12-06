@@ -72,3 +72,9 @@ def upload_relation(request):
         response['msg'] = '服务器内部错误'
         response['code'] = 1
     return HttpResponse(json.dumps(response), content_type="application/json")
+
+@csrf_exempt
+def return_kg(request):
+    neo4j = Neo4j()
+    kg_data = neo4j.return_data()  # save entity to neo4j
+    return JsonResponse(kg_data, safe=False)

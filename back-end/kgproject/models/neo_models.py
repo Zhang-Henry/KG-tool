@@ -50,3 +50,16 @@ class Neo4j():
         CREATE(entity1)-[:RELATION {{type: line.{5}}}] -> (entity2)""".format(file_name, entity1, entity2, df1_pk, df2_pk, relation)
         print(command)
         self.graph.run(command)
+
+    def return_data(self):
+        # MATCH p=()-[r:RELATION]->()
+        # WITH COLLECT(p) AS ps
+        # CALL apoc.convert.toTree(ps) yield value
+        # RETURN value
+        command = """MATCH p=()-[r:RELATION]->()
+        WITH COLLECT(p) AS ps
+        CALL apoc.convert.toTree(ps) yield value
+        RETURN value"""
+        data = self.graph.run(command).data()
+        print(data)
+        return data

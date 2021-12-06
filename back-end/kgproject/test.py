@@ -24,3 +24,4 @@ command = """LOAD CSV WITH HEADERS FROM "file:///{0}" AS line
 MATCH(entity1: {1}{{{3}: line.{1}}}), (entity2: {2}{{{4}: line.{2}}})
 CREATE(entity1)-[:RELATION {{type: line.{5}}}] -> (entity2)""".format(file_name, entity1,entity2,df1_pk,df2_pk,relation)
 print(command)
+

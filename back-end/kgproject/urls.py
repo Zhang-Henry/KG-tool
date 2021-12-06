@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('uploadentity/', views.upload_entity, name='upload_entity'),
     path('uploadrelation/', views.upload_relation, name='upload_relation'),
+    path('returnkg/', views.return_kg, name='return_kg'),
 ]
