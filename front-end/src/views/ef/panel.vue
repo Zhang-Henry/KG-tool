@@ -37,15 +37,15 @@
 
     <el-container>
         <el-header class='el-header'> 
-            <div style="font-size:24px;color:#333333;text-align:left;margin-left:50px;margin-top:40px;">
-                知识图谱构建
-            </div>
-            <div style="font-size:12px;color:#333333;text-align:left;margin-left:50px;margin-top:4px;">
-                用户输入结构化文本 实现自定义知识图谱
-            </div>
+            <el-steps :active="1" align-center finish-status="success"
+                style="width:600px;margin-left:auto;margin-right:auto;margin-top:40px;">
+                    <el-step title="STEP 1" description="上传实体、关系文件"></el-step>
+                    <el-step title="STEP 2" description="定义实体属性、关系"></el-step>
+                    <el-step title="STEP 3" description="完成图谱构建"></el-step>
+                </el-steps>
         </el-header>
         <el-main class="main">
-            <div v-if="easyFlowVisible" style="height: calc(100vh);">
+            <div v-if="easyFlowVisible" style="height: calc(80vh);">
                 <el-row>
                     <!--顶部工具菜单-->
                     <el-col :span="24">
@@ -61,6 +61,7 @@
                             <el-button type="text" icon="el-icon-minus" size="large" @click="zoomSub"></el-button>
                             <div style="float: right;margin-right: 5px">
                                 <el-button type="info" plain round icon="el-icon-document" @click="dataInfo" size="mini">流程信息</el-button>
+                                <el-button type="info" round size="mini" @click="nextStep">下一步</el-button>
                             </div>
                         </div>
                     </el-col>
@@ -203,6 +204,17 @@
             getUUID() {
                 return Math.random().toString(36).substr(3, 10)
             },
+            nextStep(){
+                axios.post("http://localhost:8000/getuserinfo/",JSON.stringify(this.data),{
+                    headers: {
+                        'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
+                    }
+                }).then(res => {
+                    console.log(res);
+                });
+                console.log(this.data)
+                this.$router.push({ path:'/kgfinish'  })
+            },
             jsPlumbInit() {
                 this.jsPlumb.ready(() => {
                     // 导入默认配置
@@ -256,10 +268,7 @@
                             this.$message.error('节点不支持连接自己')
                             return false
                         }
-                        if (this.hasLine(from, to)) {
-                            this.$message.error('该关系已存在,不允许重复创建')
-                            return false
-                        }
+                        
                         if (this.hashOppositeLine(from, to)) {
                             this.$message.error('不支持两个节点之间连线回环');
                             return false

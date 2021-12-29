@@ -13,7 +13,8 @@ class Neo4j():
 
     def __init__(self):
         print("Creating neo4j class ...")
-        self.graph = Graph(config.neo4j_url, password=config.password)
+        self.graph = Graph(
+            config.neo4j_url, password=config.password)
         print("The neo4j database connected successfully")
 
     def saveEntity(self, file_name):

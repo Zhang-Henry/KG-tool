@@ -3,65 +3,31 @@ let dataB = {
     nodeList: [
         {
             id: 'nodeA',
-            name: '实体A',
+            name: 'Film',
             type: 'task',
             left: '18px',
             top: '223px',
             ico: 'el-icon-user-solid',
             state: 'success',
-            attribute:[],
+            attribute:['movie','director','boxOffice','releaseTime'],
         },
         {
             id: 'nodeB',
             type: 'task',
-            name: '实体B',
+            name: 'Person',
             left: '351px',
             top: '96px',
             ico: 'el-icon-goods',
             state: 'error',
-            attribute:[],
+            attribute:['name','birthday','nationality','profession'],
         },
-        {
-            id: 'nodeC',
-            name: '实体C',
-            type: 'task',
-            left: '354px',
-            top: '351px',
-            ico: 'el-icon-present',
-            state: 'warning',
-            attribute:[],
-        }, {
-            id: 'nodeD',
-            name: '实体D',
-            type: 'task',
-            left: '723px',
-            top: '215px',
-            ico: 'el-icon-present',
-            state: 'running',
-            attribute:[],
-        }
     ],
     lineList: [{
         from: 'nodeA',
         to: 'nodeB',
-        label: '关系1',
+        label: '主演',
         attribute:[],
-    }, {
-        from: 'nodeB',
-        to: 'nodeC',
-        label: '关系2',
-        attribute:[],
-    }, {
-        from: 'nodeB',
-        to: 'nodeD',
-        label: '关系3',
-        attribute:[],
-    }, {
-        from: 'nodeC',
-        to: 'nodeD',
-        label: '关系4',
-        attribute:[],
-    }
+    }, 
     ]
 }
 

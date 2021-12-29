@@ -9,15 +9,24 @@ import VueAxios from "vue-axios";
 import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css'
 import './views/ef/index.css'
-
+import vuex from 'vuex'
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
+Vue.use(vuex);
+var store = new vuex.Store({//store对象
+    state:{
+        fileName:""
+    }
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
+
+

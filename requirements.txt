@@ -1,13 +1,13 @@
 appnope==0.1.2
 asgiref==3.4.1
 attrs==21.2.0
-autopep8 @ file:///tmp/build/80754af9/autopep8_1620866417880/work
 backcall==0.2.0
 certifi==2021.10.8
 charset-normalizer==2.0.7
 Click==7.0
 colorama==0.4.4
 decorator==5.1.0
+demjson==1.6
 Django==3.2.8
 django-cors-headers==3.10.0
 django-filter==21.1
@@ -20,15 +20,14 @@ ipykernel==5.5.6
 ipython==6.5.0
 ipython-genutils==0.2.0
 jedi==0.18.1
+jsonlines==3.0.0
 jupyter-client==7.0.6
 jupyter-console==5.2.0
 jupyter-core==4.9.1
 Markdown==3.3.4
 monotonic==1.6
-mysqlclient==2.0.3
 neo4j-driver==4.3.6
 neobolt==1.7.17
-neomodel==4.0.7
 neotime==1.7.4
 nest-asyncio==1.5.1
 packaging==21.2
@@ -42,7 +41,6 @@ prompt-toolkit==2.0.10
 ptyprocess==0.7.0
 py==1.11.0
 py2neo==2021.2.3
-pycodestyle @ file:///tmp/build/80754af9/pycodestyle_1636635402688/work
 Pygments==2.3.1
 pyparsing==2.4.7
 pytest==6.2.5
@@ -53,8 +51,6 @@ Shapely==1.7.1
 simplegeneric==0.8.1
 six==1.16.0
 sqlparse==0.4.2
-toml @ file:///tmp/build/80754af9/toml_1616166611790/work
 tornado==6.1
-traitlets==5.1.1
 urllib3==1.24.3
 wcwidth==0.2.5

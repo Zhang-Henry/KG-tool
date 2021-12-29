@@ -79,3 +79,49 @@ def return_kg(request):
     neo4j = Neo4j()
     kg_data = neo4j.query_all_nodes_relations_labels()  # save entity to neo4j
     return JsonResponse(kg_data, safe=False)
+
+# 上传json文件，内容包括实体和关系
+
+
+@csrf_exempt
+def upload_json(request):
+    response = {}
+    if request.method == 'POST':
+        req = request.FILES.get('file')
+    # 上传文件类型过滤
+        file_type = re.match(r'.*\.(json)', req.name)
+        if not file_type:
+            response['code'] = 2
+            response['msg'] = '文件类型不匹配, 请重新上传'
+            return HttpResponse(json.dumps(response))
+        # 打开特定的文件进行二进制的写操作
+        destination = open(
+            os.path.join(config.BASE_IMPORT_URL, req.name), 'wb+')
+        for chunk in req.chunks():  # 分块写入文件
+            destination.write(chunk)
+        destination.close()
+        response['msg'] = "Success"
+        response['code'] = 200
+    return HttpResponse(json.dumps(response), content_type="application/json")
+
+# 返回json实体中所有的属性
+
+
+@csrf_exempt
+def attr(request,filename):
+    path = os.path.join(config.BASE_IMPORT_URL, filename) + ".json"
+    data_json = {}
+    keys = []
+    for data in open(path, encoding="utf-8"):
+        data_dict = json.loads(data)
+        for key in data_dict.keys():
+            if key not in keys:
+                keys.append(key)
+    data_json["attri"] = keys
+    print(data_json)
+    return HttpResponse(json.dumps(data_json), content_type="application/json")
+
+
+@csrf_exempt
+def create_graph(request, filename):
+    neo4j = Neo4j()
