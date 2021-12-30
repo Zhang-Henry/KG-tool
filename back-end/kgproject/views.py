@@ -108,16 +108,10 @@ def upload_json(request):
 
 
 @csrf_exempt
-def attr(request,filename):
-    path = os.path.join(config.BASE_IMPORT_URL, filename) + ".json"
-    data_json = {}
-    keys = []
-    for data in open(path, encoding="utf-8"):
-        data_dict = json.loads(data)
-        for key in data_dict.keys():
-            if key not in keys:
-                keys.append(key)
-    data_json["attri"] = keys
+def attr(request, filename):
+    neo4j = Neo4j()
+    data_json = dict()
+    data_json["attri"] = neo4j.all_attr(filename)
     print(data_json)
     return HttpResponse(json.dumps(data_json), content_type="application/json")
 
@@ -125,3 +119,9 @@ def attr(request,filename):
 @csrf_exempt
 def create_graph(request, filename):
     neo4j = Neo4j()
+    if request.method == 'POST':
+        graph_info = request.POST.get('graph_info') #获取前端创建的节点、关系信息
+        neo4j.read_node(json.loads(graph_info),filename)
+        # neo4j.create_graphnodes()
+        neo4j.create_graphrels()
+    return HttpResponse("success")

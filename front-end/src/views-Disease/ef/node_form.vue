@@ -19,7 +19,7 @@
                         <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small"
                         @keyup.enter.native="handleInputConfirm(node)" @blur="handleInputConfirm(node)"></el-input>
                         <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-
+                        
                     </el-form-item>
 
                     <!--<el-form-item label="状态">
@@ -32,7 +32,7 @@
                             </el-option>
                         </el-select>
                     </el-form-item>-->
-
+                    
                     <el-form-item>
                         <el-button icon="el-icon-close">重置</el-button>
                         <el-button type="primary" icon="el-icon-check" @click="save">保存</el-button>
@@ -61,7 +61,7 @@
                         <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small"
                         @keyup.enter.native="handleInputConfirm_line(line)" @blur="handleInputConfirm_line(line)"></el-input>
                         <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-
+                        
                     </el-form-item>
 
                     <el-form-item>
@@ -158,7 +158,7 @@
             // 修改连线
             saveLine(line) {
                 console.log(this.line.attribute)
-                this.$emit('setLineLabel', this.line.from, this.line.to, this.line.label, this.line.attribute)
+                this.$emit('setLineLabel', this.line.from, this.line.to, this.line.label, this.line.attribute, this.line.lineId)
             },
             save() {
                 this.data.nodeList.filter((node) => {
