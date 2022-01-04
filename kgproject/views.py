@@ -112,13 +112,14 @@ def attr(request, filename):
     neo4j = Neo4j()
     data_json = dict()
     data_json["attri"] = neo4j.all_attr(filename)
-    print(data_json)
+    # print(data_json)
     return HttpResponse(json.dumps(data_json), content_type="application/json")
 
 
 @csrf_exempt
 def create_graph(request, filename):
     neo4j = Neo4j()
+    print(neo4j.query_all_nodes_relations_labels())
     if request.method == 'POST':
         graph_info = request.POST.get('graph_info') #获取前端创建的节点、关系信息
         neo4j.read_node(json.loads(graph_info),filename)

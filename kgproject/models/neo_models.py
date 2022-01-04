@@ -1,4 +1,5 @@
 import json
+from logging import error
 import pandas as pd
 from kgproject import config
 from py2neo import Graph, Node
@@ -12,8 +13,11 @@ class Neo4j():
 
     def __init__(self):
         print("Creating neo4j class ...")
-        self.graph = Graph(
+        try:
+            self.graph = Graph(
             config.neo4j_url, password=config.password)
+        except error:
+            print(error)
         print("The neo4j database connected successfully")
         self.id_name = {}  # 建立实体name和id的对应关系
         self.id_relation = {}  # 建立relation和id的对应关系
@@ -129,6 +133,10 @@ class Neo4j():
                     keys.append(key)
         return keys
 
+    def remove_duplicates(self):
+        for k, v in self.entity_list.items():
+            self.entity_list[k] = set(v)
+
     def read_node(self, graph_info, filename):
         # 初始化entity和relation的list
         for node in graph_info['nodeList']:
@@ -225,6 +233,7 @@ class Neo4j():
 
     def create_graphnodes(self):
         self.create_diseases_nodes(self.disease_infos)
+        self.remove_duplicates()
         for k, v in self.entity_list.items():
             self.create_node(self.id_name[k], v)
 
