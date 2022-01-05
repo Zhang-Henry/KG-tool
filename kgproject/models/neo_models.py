@@ -13,11 +13,8 @@ class Neo4j():
 
     def __init__(self):
         print("Creating neo4j class ...")
-        try:
-            self.graph = Graph(
+        self.graph = Graph(
             config.neo4j_url, password=config.password)
-        except error:
-            print(error)
         print("The neo4j database connected successfully")
         self.id_name = {}  # 建立实体name和id的对应关系
         self.id_relation = {}  # 建立relation和id的对应关系
@@ -163,7 +160,7 @@ class Neo4j():
             data_dict = json.loads(data)
             cnt += 1
             print(cnt)
-            disease = data_dict['name'] #疾病名字
+            disease = data_dict['name']  # 疾病名字
             for attr in self.disease_attr:
                 if attr in data_dict:
                     disease_dict[attr] = data_dict[attr]
@@ -238,10 +235,50 @@ class Neo4j():
             self.create_node(self.id_name[k], v)
 
     def create_graphrels(self):
-        for k,v in self.relation_list.items():
+        for k, v in self.relation_list.items():
             start_id = self.relation_dict[k]['from']
             start_name = self.id_name[start_id]
             end_id = self.relation_dict[k]['to']
             end_name = self.id_name[end_id]
             rel_type = self.id_relation[k]
             self.create_relationship(start_name, end_name, v, rel_type)
+
+    def query_labels_relations(self):
+        # return the whole knowledge graph info
+        sql1 = "CALL db.labels()"
+        sql2 = "CALL db.relationshipTypes()"
+        entitys = self.graph.run(sql1).data()
+        relations = self.graph.run(sql2).data()
+        # print(entitys, relations)
+        entity_list = [e['label'] for e in entitys]
+        relation_list = [r['relationshipType'] for r in relations]
+        return entity_list, relation_list
+
+    def query_entity(self, entity_name):
+        info = {}
+        entitys, relations = self.query_labels_relations()
+        sql = "MATCH (n:{0}) RETURN n LIMIT 25".format(entity_name)
+        entity = self.graph.run(sql).data()
+        # print(entity)
+        data = []
+        for e in entity:
+            instance = {}
+            instance['name'] = e['n']['name']
+            e['n'].pop('name')
+            for k, v in e['n'].items():
+                if isinstance(v, list):
+                    e['n'][k] = "; ".join(v)
+            instance['properties'] = e['n']
+            instance['category'] = entity_name
+            instance['symolSize'] = 80
+            data.append(instance)
+        info['data'] = data
+        info['entitys'] = entitys
+        info['relations'] = relations
+        return info
+
+    def query_relation(self, relation_name):
+        sql = "MATCH p=()-[r:{0}]->() RETURN p LIMIT 25".format(relation_name)
+        relation = self.graph.run(sql).data()
+        # print(relation)
+        return relation

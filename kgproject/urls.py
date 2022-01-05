@@ -25,4 +25,8 @@ urlpatterns = [
     path('uploadjson/', views.upload_json, name='upload_json'),
     path('attr/<str:filename>/', views.attr, name='attr'),
     path('creategraph/<str:filename>/', views.create_graph, name='create_graph'),
+    path('get_entity/<str:entity_name>/',
+         views.get_entity, name='get_entity'),
+    path('get_relation/<str:relation_name>/',
+         views.get_relation, name='get_relation'),
 ]
