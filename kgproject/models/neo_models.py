@@ -1,8 +1,9 @@
 import json
 from logging import error
+from random import SystemRandom
 import pandas as pd
 from kgproject import config
-from py2neo import Graph, Node
+from py2neo import Graph, Node, RelationshipMatcher
 import os
 import sys
 sys.path.append("..")
@@ -243,6 +244,12 @@ class Neo4j():
             rel_type = self.id_relation[k]
             self.create_relationship(start_name, end_name, v, rel_type)
 
+
+    def deleteDuplicate(self, li):
+        temp_list = list(set([str(i) for i in li]))
+        li = [eval(i) for i in temp_list]
+        return li
+
     def query_labels_relations(self):
         # return the whole knowledge graph info
         sql1 = "CALL db.labels()"
@@ -278,7 +285,51 @@ class Neo4j():
         return info
 
     def query_relation(self, relation_name):
-        sql = "MATCH p=()-[r:{0}]->() RETURN p LIMIT 25".format(relation_name)
-        relation = self.graph.run(sql).data()
-        # print(relation)
-        return relation
+        info = {}
+        data = []
+        links = []
+        all_entitys, all_relations = self.query_labels_relations()
+        relations = self.graph.match(r_type=relation_name)
+        for r in relations:
+            start = r.nodes[0]
+            end = r.nodes[1]
+
+            #给start node附属性
+            n1 = {}
+            n1['name'] = start['name']
+            n1['category'] = list(start.labels)[0]
+            n1['symolSize'] = 80
+            property_info = dict(start)
+            property_info.pop('name')
+            for k, v in property_info.items():
+                if isinstance(v, list):
+                    property_info[k] = "; ".join(v)
+            n1['properties'] = property_info
+
+            #给end node附属性
+            n2 = {}
+            n2['name'] = end['name']
+            n2['category'] = list(end.labels)[0]
+            n2['symolSize'] = 80
+            property_info = dict(end)
+            property_info.pop('name')
+            for k, v in property_info.items():
+                if isinstance(v, list):
+                    property_info[k] = "; ".join(v)
+            n2['properties'] = property_info
+            data.append(n1)
+            data.append(n2)
+
+            #关系json
+            link = {}
+            link['target'] = end['name']
+            link['source'] = start['name']
+            link['name'] = relation_name
+            links.append(link)
+
+        info['data'] = data
+        self.deleteDuplicate(data) #给实体去重
+        info['links'] = links
+        info['entitys'] = all_entitys
+        info['relations'] = all_relations
+        return info

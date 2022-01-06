@@ -120,23 +120,22 @@ def attr(request, filename):
 def create_graph(request, filename):
     neo4j = Neo4j()
     if request.method == 'POST':
-        graph_info = request.POST.get('graph_info') #获取前端创建的节点、关系信息
-        neo4j.read_node(json.loads(graph_info),filename)
+        graph_info = request.POST.get('graph_info')  # 获取前端创建的节点、关系信息
+        neo4j.read_node(json.loads(graph_info), filename)
         neo4j.create_graphnodes()
         neo4j.create_graphrels()
     return HttpResponse("success")
-
 
 
 @csrf_exempt
 def get_entity(request, entity_name):
     neo4j = Neo4j()
     info = neo4j.query_entity(entity_name)
-    return HttpResponse(json.dumps(info, ensure_ascii=False), content_type = "application/json")
+    return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
 
 
 @csrf_exempt
 def get_relation(request, relation_name):
     neo4j = Neo4j()
     data = neo4j.query_relation(relation_name)
-    return HttpResponse(data, content_type="application/json")
+    return HttpResponse(json.dumps(data, ensure_ascii=False), content_type="application/json")
