@@ -29,4 +29,5 @@ urlpatterns = [
          views.get_entity, name='get_entity'),
     path('get_relation/<str:relation_name>/',
          views.get_relation, name='get_relation'),
+    path('after_creation/', views.after_creation, name='after_creation'),
 ]

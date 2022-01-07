@@ -124,7 +124,14 @@ def create_graph(request, filename):
         neo4j.read_node(json.loads(graph_info), filename)
         neo4j.create_graphnodes()
         neo4j.create_graphrels()
-    return HttpResponse("success")
+        return HttpResponse("success")
+
+
+@csrf_exempt
+def after_creation(request):  # 创建图谱后自动返回一个任意关系的查询
+    neo4j = Neo4j()
+    data = neo4j.random_relation()
+    return HttpResponse(json.dumps(data, ensure_ascii=False), content_type="application/json")
 
 
 @csrf_exempt

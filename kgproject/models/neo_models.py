@@ -244,7 +244,6 @@ class Neo4j():
             rel_type = self.id_relation[k]
             self.create_relationship(start_name, end_name, v, rel_type)
 
-
     def deleteDuplicate(self, li):
         temp_list = list(set([str(i) for i in li]))
         li = [eval(i) for i in temp_list]
@@ -261,6 +260,7 @@ class Neo4j():
         relation_list = [r['relationshipType'] for r in relations]
         return entity_list, relation_list
 
+    # 查找指定实体
     def query_entity(self, entity_name):
         info = {}
         entitys, relations = self.query_labels_relations()
@@ -284,6 +284,7 @@ class Neo4j():
         info['relations'] = relations
         return info
 
+    # 查找指定关系，使用py2neo接口查询
     def query_relation(self, relation_name):
         info = {}
         data = []
@@ -294,7 +295,7 @@ class Neo4j():
             start = r.nodes[0]
             end = r.nodes[1]
 
-            #给start node附属性
+            # 给start node附属性
             n1 = {}
             n1['name'] = start['name']
             n1['category'] = list(start.labels)[0]
@@ -306,7 +307,7 @@ class Neo4j():
                     property_info[k] = "; ".join(v)
             n1['properties'] = property_info
 
-            #给end node附属性
+            # 给end node附属性
             n2 = {}
             n2['name'] = end['name']
             n2['category'] = list(end.labels)[0]
@@ -320,7 +321,7 @@ class Neo4j():
             data.append(n1)
             data.append(n2)
 
-            #关系json
+            # 关系json
             link = {}
             link['target'] = end['name']
             link['source'] = start['name']
@@ -328,8 +329,16 @@ class Neo4j():
             links.append(link)
 
         info['data'] = data
-        self.deleteDuplicate(data) #给实体去重
+        self.deleteDuplicate(data)  # 给实体去重
         info['links'] = links
         info['entitys'] = all_entitys
         info['relations'] = all_relations
         return info
+
+    # 创建完图谱后返回第一个关系查询结果
+    def random_relation(self):
+        sql = "CALL db.relationshipTypes()"
+        relations = self.graph.run(sql).data()
+        relation_list = [r['relationshipType'] for r in relations]
+        if len(relation_list) > 0:
+            return self.query_relation(relation_list[0])
