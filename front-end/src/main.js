@@ -16,7 +16,8 @@ Vue.use(ElementUI);
 Vue.use(vuex);
 var store = new vuex.Store({//store对象
     state:{
-        fileName:""
+        fileName:"",
+        activeName:"first",
     }
 })
 

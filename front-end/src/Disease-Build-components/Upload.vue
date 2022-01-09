@@ -85,12 +85,7 @@ export default {
             this.$store.state.fileName=file.name.substring(0,file.name.length-5);
         },
         goToNext(){
-            this.$router.push({ 
-            name:'Panel_Disease',
-                params:{
-                    filename:this.file_name
-                }
-            })
+            this.$router.push({ path:'/panelDisease'})
         }
         
     },

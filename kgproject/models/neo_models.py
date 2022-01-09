@@ -73,7 +73,7 @@ class Neo4j():
         command1 = "CALL apoc.schema.nodes()"
         schema = self.graph.run(command1).data()
         all_info = {}
-        entitys = []
+        entities = []
         links = []
         pks = []
         labels = []
@@ -94,8 +94,8 @@ class Neo4j():
                 des = ", ".join(properties)
                 entity_new['des'] = des
                 entity_new['category'] = label
-                entitys.append(entity_new)
-        all_info['data'] = entitys
+                entities.append(entity_new)
+        all_info['data'] = entities
 
         command2 = "MATCH (n)-[r]-(m) RETURN *;"
         relations = self.graph.run(command2).data()
@@ -253,17 +253,17 @@ class Neo4j():
         # return the whole knowledge graph info
         sql1 = "CALL db.labels()"
         sql2 = "CALL db.relationshipTypes()"
-        entitys = self.graph.run(sql1).data()
+        entities = self.graph.run(sql1).data()
         relations = self.graph.run(sql2).data()
-        # print(entitys, relations)
-        entity_list = [e['label'] for e in entitys]
+        # print(entities, relations)
+        entity_list = [e['label'] for e in entities]
         relation_list = [r['relationshipType'] for r in relations]
         return entity_list, relation_list
 
     # 查找指定实体
     def query_entity(self, entity_name):
         info = {}
-        entitys, relations = self.query_labels_relations()
+        entities, relations = self.query_labels_relations()
         sql = "MATCH (n:{0}) RETURN n LIMIT 25".format(entity_name)
         entity = self.graph.run(sql).data()
         # print(entity)
@@ -280,7 +280,7 @@ class Neo4j():
             instance['symolSize'] = 80
             data.append(instance)
         info['data'] = data
-        info['entitys'] = entitys
+        info['entities'] = entities
         info['relations'] = relations
         return info
 
@@ -289,7 +289,7 @@ class Neo4j():
         info = {}
         data = []
         links = []
-        all_entitys, all_relations = self.query_labels_relations()
+        all_entities, all_relations = self.query_labels_relations()
         relations = self.graph.match(r_type=relation_name)
         for r in relations:
             start = r.nodes[0]
@@ -328,10 +328,10 @@ class Neo4j():
             link['name'] = relation_name
             links.append(link)
 
+        data = self.deleteDuplicate(data)  # 给实体去重
         info['data'] = data
-        self.deleteDuplicate(data)  # 给实体去重
         info['links'] = links
-        info['entitys'] = all_entitys
+        info['entities'] = all_entities
         info['relations'] = all_relations
         return info
 

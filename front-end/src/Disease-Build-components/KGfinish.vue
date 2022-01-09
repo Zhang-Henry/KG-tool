@@ -74,16 +74,26 @@ export default {
     },
     methods: {
         goToNext(){
-            axios.get("http://localhost:8000/returnkg/").then(res=>{
+            let fileName=this.$store.state.fileName;
+            axios.post("http://localhost:8000/creategraph/"+fileName+"/",{
+                    headers: {
+                        'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
+                    }
+                }).then(res => {
+                    console.log(res);
+            });
+            axios.get("http://localhost:8000/after_creation/").then(res=>{
                 var data = res.data.data;
                 var links = res.data.links;
-                var labels = res.data.labels;
+                var entities = res.data.entities;
+                var relations = res.data.relations;
                 this.$router.push({ 
                     name:'Kgshow_Disease',
                     params:{
                         data:data,
                         links:links,
-                        labels:labels,
+                        entities:entities,
+                        relations:relations,
                     }
                 })
             })
