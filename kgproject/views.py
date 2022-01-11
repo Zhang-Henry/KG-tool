@@ -120,8 +120,10 @@ def attr(request, filename):
 def create_graph(request, filename):
     neo4j = Neo4j()
     if request.method == 'POST':
-        graph_info = request.POST.get('graph_info')  # 获取前端创建的节点、关系信息
-        neo4j.read_node(json.loads(graph_info), filename)
+        # graph_info = request.POST.get("流程B")  # 获取前端创建的节点、关系信息
+        graph_info = json.loads(request.body)
+        print(graph_info)
+        neo4j.read_node(graph_info, filename)
         neo4j.create_graphnodes()
         neo4j.create_graphrels()
         return HttpResponse("success")

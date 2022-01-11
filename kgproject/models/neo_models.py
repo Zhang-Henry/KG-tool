@@ -3,7 +3,7 @@ from logging import error
 from random import SystemRandom
 import pandas as pd
 from kgproject import config
-from py2neo import Graph, Node, RelationshipMatcher
+from py2neo import Graph, Node
 import os
 import sys
 sys.path.append("..")
@@ -137,6 +137,7 @@ class Neo4j():
 
     def read_node(self, graph_info, filename):
         # 初始化entity和relation的list
+        print(graph_info)
         for node in graph_info['nodeList']:
             self.id_name[node['id']] = node['name']
             if node['name'] == 'Disease':

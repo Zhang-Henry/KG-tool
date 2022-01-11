@@ -200,6 +200,7 @@ export default {
                     }
                 }).then(res => {
                     console.log(res);
+                    this.refreshGraph(res.data.data,res.data.links);
             });
         },
 
@@ -211,6 +212,9 @@ export default {
                     }
                 }).then(res => {
                     console.log(res);
+                    var data = res.data.data;
+                    var links = res.data.links;
+                    console.log(data,links);
                     this.refreshGraph(res.data.data,res.data.links);
             });
         },
@@ -321,7 +325,6 @@ export default {
             };
             this.myChart.setOption(option);
             
-            
             this.myChart.on('click', (params)  => {
                 console.log(params);
                 var data = params.data;
@@ -377,7 +380,7 @@ export default {
         refreshGraph(data,links){
             var option = this.myChart.getOption();
             option.series[0].data = data;
-            options.series[0].links = links;
+            option.series[0].links = links;
             this.myChart.setOption(option);    
         }
         

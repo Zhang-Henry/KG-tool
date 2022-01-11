@@ -75,13 +75,13 @@ export default {
     methods: {
         goToNext(){
             let fileName=this.$store.state.fileName;
-            axios.post("http://localhost:8000/creategraph/"+fileName+"/",{
-                    headers: {
-                        'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
-                    }
-                }).then(res => {
-                    console.log(res);
-            });
+            // axios.post("http://localhost:8000/creategraph/"+fileName+"/",{
+            //         headers: {
+            //             'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
+            //         }
+            //     }).then(res => {
+            //         console.log(res);
+            // });
             axios.get("http://localhost:8000/after_creation/").then(res=>{
                 var data = res.data.data;
                 var links = res.data.links;

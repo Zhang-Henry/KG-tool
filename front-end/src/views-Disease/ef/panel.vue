@@ -210,7 +210,7 @@
             },
             nextStep(){
                 let fileName=this.$store.state.fileName;
-                axios.post("http://localhost:8000/creategraph/"+fileName+"/",JSON.stringify(this.data),{
+                axios.post("http://localhost:8000/creategraph/",JSON.stringify(this.data),{
                     headers: {
                         'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
                     }
