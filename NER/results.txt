@@ -1,0 +1,197 @@
+{"subject": "city", "relation": "is in", "object": "\u0106olia"}
+{"subject": "Menapolus", "relation": "son of", "object": "Ithagenes"}
+{"subject": "immigrants", "relation": "Among Menapolus is", "object": "son of Ithagenes"}
+{"subject": "he", "relation": "married", "object": "poor"}
+{"subject": "he", "relation": "married", "object": "Although poor"}
+{"subject": "girl", "relation": "was left orphan at", "object": "early age"}
+{"subject": "girl", "relation": "was left at", "object": "age"}
+{"subject": "girl", "relation": "was", "object": "left"}
+{"subject": "girl", "relation": "was left orphan under", "object": "guardianship of Cleanax of Argos"}
+{"subject": "girl", "relation": "was", "object": "left at age under guardianship of Cleanax"}
+{"subject": "girl", "relation": "was", "object": "left at early age under guardianship of Cleanax"}
+{"subject": "girl", "relation": "was", "object": "left at age under guardianship"}
+{"subject": "girl", "relation": "was left orphan at", "object": "age"}
+{"subject": "girl", "relation": "was", "object": "left at age under guardianship of Cleanax of Argos"}
+{"subject": "girl", "relation": "was", "object": "left at early age under guardianship of Cleanax of Argos"}
+{"subject": "girl", "relation": "was left under", "object": "guardianship of Cleanax of Argos"}
+{"subject": "girl", "relation": "was left under", "object": "guardianship"}
+{"subject": "girl", "relation": "was left orphan under", "object": "guardianship of Cleanax"}
+{"subject": "girl", "relation": "was left orphan under", "object": "guardianship"}
+{"subject": "girl", "relation": "was left", "object": "orphan"}
+{"subject": "girl", "relation": "was left at", "object": "early age"}
+{"subject": "girl", "relation": "was left under", "object": "guardianship of Cleanax"}
+{"subject": "girl", "relation": "was", "object": "left at early age under guardianship"}
+{"subject": "we", "relation": "are indebted for", "object": "happiness"}
+{"subject": "we", "relation": "are indebted for", "object": "so much happiness"}
+{"subject": "It", "relation": "is to", "object": "indiscretion of maiden"}
+{"subject": "we", "relation": "are", "object": "indebted"}
+{"subject": "It", "relation": "is to", "object": "indiscretion"}
+{"subject": "we", "relation": "are indebted for", "object": "much happiness"}
+{"subject": "Homer", "relation": "was", "object": "first fruit"}
+{"subject": "Homer", "relation": "was first fruit of", "object": "her juvenile frailty"}
+{"subject": "Homer", "relation": "received name", "object": "having born near river Meles"}
+{"subject": "Homer", "relation": "received", "object": "from having born near river Meles"}
+{"subject": "Homer", "relation": "received", "object": "having born"}
+{"subject": "Homer", "relation": "received", "object": "from having born"}
+{"subject": "Homer", "relation": "was fruit of", "object": "her juvenile frailty"}
+{"subject": "Homer", "relation": "received name", "object": "having born"}
+{"subject": "Homer", "relation": "received name", "object": "from having born"}
+{"subject": "Homer", "relation": "received name", "object": "from having born near river Meles"}
+{"subject": "Homer", "relation": "received", "object": "name of Melesigenes"}
+{"subject": "Homer", "relation": "received", "object": "having born near river Meles"}
+{"subject": "Homer", "relation": "received", "object": "name"}
+{"subject": "Homer", "relation": "received name in", "object": "Boeotia"}
+{"subject": "Homer", "relation": "was first fruit of", "object": "her frailty"}
+{"subject": "Homer", "relation": "received name in", "object": "whither Critheis"}
+{"subject": "Homer", "relation": "was fruit of", "object": "her frailty"}
+{"subject": "Homer", "relation": "received in", "object": "whither Critheis"}
+{"subject": "Homer", "relation": "received in", "object": "Boeotia"}
+{"subject": "Homer", "relation": "was", "object": "fruit"}
+{"subject": "Critheis", "relation": "spin", "object": "flax"}
+{"subject": "Critheis", "relation": "manage", "object": "his household"}
+{"subject": "Critheis", "relation": "being", "object": "married"}
+{"subject": "man", "relation": "teacher of", "object": "literature"}
+{"subject": "satisfactory", "relation": "was", "object": "her performance of task"}
+{"subject": "satisfactory", "relation": "was", "object": "So her performance"}
+{"subject": "proposals", "relation": "declaring", "object": "himself"}
+{"subject": "he", "relation": "made", "object": "proposals"}
+{"subject": "he", "relation": "proposals of", "object": "marriage"}
+{"subject": "proposals", "relation": "declaring as", "object": "inducement"}
+{"subject": "satisfactory", "relation": "was", "object": "her performance"}
+{"subject": "satisfactory", "relation": "was", "object": "So her performance of task"}
+{"subject": "proposals", "relation": "declaring as", "object": "further inducement"}
+{"subject": "Melesigenes", "relation": "surpassed in", "object": "attainment"}
+{"subject": "Melesigenes", "relation": "soon surpassed in", "object": "attainment"}
+{"subject": "careful cultivation", "relation": "ripened", "object": "talents"}
+{"subject": "nature", "relation": "rivalled in", "object": "wisdom"}
+{"subject": "cultivation", "relation": "ripened", "object": "talents"}
+{"subject": "nature", "relation": "rivalled", "object": "his preceptor"}
+{"subject": "Phemius", "relation": "leaving", "object": "him"}
+{"subject": "Phemius", "relation": "leaving to", "object": "his property"}
+{"subject": "Phemius", "relation": "leaving", "object": "heir"}
+{"subject": "Phemius", "relation": "leaving", "object": "sole heir"}
+{"subject": "Phemius", "relation": "leaving heir to", "object": "his property"}
+{"subject": "Melesigenes", "relation": "carried on", "object": "his adopted father 's school"}
+{"subject": "Melesigenes", "relation": "carried with", "object": "great success"}
+{"subject": "adopted father", "relation": "on", "object": "school"}
+{"subject": "Melesigenes", "relation": "carried on", "object": "his father 's school"}
+{"subject": "Melesigenes", "relation": "carried with", "object": "great success exciting"}
+{"subject": "Melesigenes", "relation": "carried with", "object": "success"}
+{"subject": "Melesigenes", "relation": "carried with", "object": "success exciting"}
+{"subject": "Melesigenes", "relation": "close", "object": "his school"}
+{"subject": "Melesigenes", "relation": "set out with", "object": "his patron"}
+{"subject": "they", "relation": "informing of", "object": "everything"}
+{"subject": "they", "relation": "examining", "object": "curiosities of countries"}
+{"subject": "they", "relation": "informing", "object": "himself"}
+{"subject": "him", "relation": "Mentes", "object": "leave"}
+{"subject": "him", "relation": "Mentes", "object": "about leave for Leucadia"}
+{"subject": "Mentes", "relation": "left to", "object": "medical superintendence of friend"}
+{"subject": "Mentes", "relation": "left to", "object": "superintendence of friend of"}
+{"subject": "Mentor", "relation": "son of", "object": "Alcinor"}
+{"subject": "him", "relation": "Mentes", "object": "to leave"}
+{"subject": "Mentes", "relation": "left to", "object": "medical superintendence of friend of"}
+{"subject": "him", "relation": "Mentes", "object": "about to leave"}
+{"subject": "Mentes", "relation": "left to", "object": "medical superintendence"}
+{"subject": "Melesigenes", "relation": "became", "object": "much worse"}
+{"subject": "him", "relation": "Mentes", "object": "about leave"}
+{"subject": "Mentes", "relation": "left to", "object": "superintendence of friend"}
+{"subject": "him", "relation": "Mentes", "object": "to leave for Leucadia"}
+{"subject": "Mentes", "relation": "left", "object": "him"}
+{"subject": "him", "relation": "Mentes", "object": "about to leave for Leucadia"}
+{"subject": "him", "relation": "Mentes", "object": "leave for Leucadia"}
+{"subject": "Melesigenes", "relation": "became", "object": "worse"}
+{"subject": "Mentes", "relation": "left to", "object": "superintendence"}
+{"subject": "legends", "relation": "respecting", "object": "Ulysses"}
+{"subject": "Melesigenes", "relation": "rapidly became", "object": "acquainted"}
+{"subject": "Melesigenes", "relation": "rapidly became Under", "object": "his hospitable host"}
+{"subject": "Melesigenes", "relation": "became Under", "object": "his hospitable host"}
+{"subject": "Melesigenes", "relation": "rapidly became Under", "object": "his host"}
+{"subject": "Melesigenes", "relation": "became Under", "object": "his host"}
+{"subject": "Melesigenes", "relation": "became", "object": "acquainted"}
+{"subject": "he", "relation": "applied to", "object": "study"}
+{"subject": "He", "relation": "returned to", "object": "Smyrna"}
+{"subject": "he", "relation": "applied to", "object": "study of poetry"}
+{"subject": "he", "relation": "applied", "object": "himself"}
+{"subject": "he", "relation": "arrived at", "object": "New Wall"}
+{"subject": "he", "relation": "passed plain over", "object": "Hermaean"}
+{"subject": "he", "relation": "arrived at", "object": "Neon Teichos"}
+{"subject": "he", "relation": "arrived at", "object": "colony"}
+{"subject": "he", "relation": "arrived at", "object": "colony of Cumae"}
+{"subject": "he", "relation": "passed over", "object": "Hermaean"}
+{"subject": "Neon Teichos", "relation": "colony of", "object": "Cumae"}
+{"subject": "his misfortunes", "relation": "Here gained", "object": "friendship of one Tychias"}
+{"subject": "talent", "relation": "Here gained", "object": "friendship"}
+{"subject": "his misfortunes", "relation": "gained", "object": "friendship of one Tychias"}
+{"subject": "talent", "relation": "Here gained", "object": "friendship of one Tychias"}
+{"subject": "his misfortunes", "relation": "Here gained", "object": "friendship"}
+{"subject": "poetical talent", "relation": "Here gained", "object": "friendship of one Tychias"}
+{"subject": "talent", "relation": "gained", "object": "friendship of one Tychias"}
+{"subject": "his misfortunes", "relation": "Here gained", "object": "him"}
+{"subject": "talent", "relation": "Here gained", "object": "him"}
+{"subject": "poetical talent", "relation": "gained", "object": "him"}
+{"subject": "his misfortunes", "relation": "gained", "object": "him"}
+{"subject": "poetical talent", "relation": "gained", "object": "friendship"}
+{"subject": "his misfortunes", "relation": "gained", "object": "friendship"}
+{"subject": "poetical talent", "relation": "Here gained", "object": "friendship"}
+{"subject": "talent", "relation": "gained", "object": "friendship"}
+{"subject": "poetical talent", "relation": "gained", "object": "friendship of one Tychias"}
+{"subject": "poetical talent", "relation": "Here gained", "object": "him"}
+{"subject": "talent", "relation": "gained", "object": "him"}
+{"subject": "he", "relation": "used", "object": "sit"}
+{"subject": "they", "relation": "honoured", "object": "spot"}
+{"subject": "they", "relation": "greatly honoured", "object": "spot"}
+{"subject": "he", "relation": "used", "object": "to sit"}
+{"subject": "inhabitants", "relation": "showed", "object": "place"}
+{"subject": "Gordius", "relation": "king of", "object": "Phrygia"}
+{"subject": "he", "relation": "delighted by", "object": "all charms of poetry"}
+{"subject": "he", "relation": "delighted by", "object": "charms of his poetry"}
+{"subject": "he", "relation": "delighted by", "object": "charms of poetry"}
+{"subject": "he", "relation": "frequented", "object": "converzationes of old men"}
+{"subject": "he", "relation": "delighted by", "object": "all charms of his poetry"}
+{"subject": "he", "relation": "frequented", "object": "converzationes of men"}
+{"subject": "he", "relation": "frequented", "object": "converzationes"}
+{"subject": "he", "relation": "render", "object": "if they would allow"}
+{"subject": "he", "relation": "render renowned", "object": "their city"}
+{"subject": "he", "relation": "render", "object": "their city"}
+{"subject": "he", "relation": "Encouraged by", "object": "reception"}
+{"subject": "he", "relation": "render", "object": "they would allow"}
+{"subject": "they", "relation": "would allow", "object": "him"}
+{"subject": "he", "relation": "render gloriously renowned", "object": "if they would allow"}
+{"subject": "he", "relation": "render gloriously renowned", "object": "their city"}
+{"subject": "they", "relation": "would allow", "object": "public maintenance"}
+{"subject": "he", "relation": "render most gloriously renowned", "object": "their city"}
+{"subject": "he", "relation": "Encouraged by", "object": "favourable reception"}
+{"subject": "he", "relation": "render renowned", "object": "if they would allow"}
+{"subject": "he", "relation": "render most gloriously renowned", "object": "they would allow"}
+{"subject": "he", "relation": "render gloriously renowned", "object": "they would allow"}
+{"subject": "he", "relation": "render renowned", "object": "they would allow"}
+{"subject": "he", "relation": "render most gloriously renowned", "object": "if they would allow"}
+{"subject": "they", "relation": "would allow", "object": "maintenance"}
+{"subject": "he", "relation": "procured", "object": "him"}
+{"subject": "he", "relation": "procured", "object": "audience in council"}
+{"subject": "he", "relation": "procured", "object": "audience"}
+{"subject": "They", "relation": "avowed", "object": "support in measure"}
+{"subject": "They", "relation": "avowed", "object": "to support"}
+{"subject": "They", "relation": "avowed", "object": "to support in measure"}
+{"subject": "They", "relation": "avowed", "object": "their willingness"}
+{"subject": "their willingness", "relation": "support", "object": "him"}
+{"subject": "They", "relation": "avowed", "object": "support"}
+{"subject": "audience", "relation": "is in", "object": "council"}
+{"subject": "their willingness", "relation": "support in", "object": "measure"}
+{"subject": "us", "relation": "left", "object": "debate"}
+{"subject": "us", "relation": "left", "object": "to debate"}
+{"subject": "answer", "relation": "be given to", "object": "his proposal"}
+{"subject": "our author", "relation": "has forgotten to", "object": "acquaint"}
+{"subject": "answer", "relation": "be", "object": "given"}
+{"subject": "us", "relation": "left", "object": "them"}
+{"subject": "poet", "relation": "to", "object": "demand"}
+{"subject": "Melesigenes", "relation": "acquired", "object": "name"}
+{"subject": "Melesigenes", "relation": "acquired", "object": "name of Homer"}
+{"subject": "Melesigenes", "relation": "acquired name for", "object": "Cumans call"}
+{"subject": "Melesigenes", "relation": "acquired name for", "object": "Cumans"}
+{"subject": "name Cumans", "relation": "call", "object": "men Homers"}
+{"subject": "name Cumans", "relation": "call", "object": "blind men Homers"}
+{"subject": "Melesigenes", "relation": "acquired for", "object": "Cumans"}
+{"subject": "Melesigenes", "relation": "acquired for", "object": "Cumans call"}
+{"subject": "poet", "relation": "vented", "object": "his di"}
+{"subject": "has its treatment", "relation": "was", "object": "denied"}
