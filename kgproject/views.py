@@ -13,6 +13,7 @@ import uuid
 import re
 from . import config
 from .models.neo_models import Neo4j
+from .ner.ner import ner
 
 
 @csrf_exempt
@@ -148,3 +149,13 @@ def get_relation(request, relation_name):
     neo4j = Neo4j()
     data = neo4j.query_relation(relation_name)
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type="application/json")
+
+
+@csrf_exempt
+def nerText(request):
+    if request.method == "POST":
+        text = request.body.decode("utf-8")
+        print(text)
+        content = ner(text)
+        print(content)
+    return HttpResponse(json.dumps(content, ensure_ascii=False), content_type="application/json")

@@ -4,11 +4,11 @@
             <el-col>
                 <el-image class="icon-img" :src="iconPath" style="width:60%;margin-top:30px;"></el-image>
                 <el-menu
-                default-active="1-1"
                 class="el-menu-vertical-demo"
                 background-color="#2b3a49"
                 text-color="#fff"
-                active-text-color="#66c6a3" style="margin-top:16px;">
+                active-text-color="#66c6a3" style="margin-top:16px;"
+                :router="true">
                 <el-submenu index="1">
                     <template slot="title">
                     <i class="el-icon-s-opportunity"></i>
@@ -19,9 +19,9 @@
                     <el-menu-item index="1-2">非结构化</el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
-                <el-menu-item index="2">
+                <el-menu-item index="/ner">
                     <i class="el-icon-menu"></i>
-                    <span slot="title">建设中...</span>
+                    <span slot="title">实体识别</span>
                 </el-menu-item>
                 <el-menu-item index="3">
                     <i class="el-icon-document"></i>

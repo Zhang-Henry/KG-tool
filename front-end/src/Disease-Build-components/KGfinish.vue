@@ -21,7 +21,7 @@
                 </el-submenu>
                 <el-menu-item index="2">
                     <i class="el-icon-menu"></i>
-                    <span slot="title">建设中...</span>
+                    <span slot="title">实体识别</span>
                 </el-menu-item>
                 <el-menu-item index="3">
                     <i class="el-icon-document"></i>
@@ -50,7 +50,7 @@
            
             </el-main>
             <el-footer style="height:22%;background-color:#f3f3f4;">
-              <el-button round @click="goToNext" style="width=70px;">点击查看</el-button>
+              <el-button round @click="goToNext" style="width=70px;" :loading="loadingbut">{{loadingbutText}}</el-button>
             </el-footer>
         </el-container>
     </el-container>
@@ -70,18 +70,14 @@ export default {
             activeTab: 'first',
             iconPath:icon_url,
             finish_icon_path:finish_icon_path,
+            loadingbut:false,
+            loadingbutText:"点击查看",
         }
     },
     methods: {
         goToNext(){
-            let fileName=this.$store.state.fileName;
-            // axios.post("http://localhost:8000/creategraph/"+fileName+"/",{
-            //         headers: {
-            //             'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
-            //         }
-            //     }).then(res => {
-            //         console.log(res);
-            // });
+            this.loadingbut = true;
+            this.loadingbuttext = "生成中...";
             axios.get("http://localhost:8000/after_creation/").then(res=>{
                 var data = res.data.data;
                 var links = res.data.links;
@@ -97,6 +93,8 @@ export default {
                     }
                 })
             })
+            this.loadingbut = false;
+            this.loadingbuttext = "点击查看";
         }
         
     },

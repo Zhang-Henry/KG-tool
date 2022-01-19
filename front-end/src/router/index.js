@@ -14,6 +14,7 @@ import Upload_Disease from "@/Disease-Build-components/Upload"
 import Panel_Disease from "@/views-Disease/ef/panel"
 import Kgfinish_Disease from "@/Disease-Build-components/KGfinish"
 import Kgshow_Disease from "@/Disease-Build-components/Kgshow"
+import Ner from "@/components/NER"
 
 Vue.use(Router)
 Vue.use(ViewResource)
@@ -74,6 +75,11 @@ export default new Router({
       path:'/kgfinishDisease',
       name:'Kgfinish_Disease',
       component: Kgfinish_Disease,
+    },
+    {
+      path:'/ner',
+      name:'Ner',
+      component: Ner,
     },
 
   ]

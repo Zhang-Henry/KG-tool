@@ -18,10 +18,11 @@
                     <el-menu-item index="1-2">非结构化</el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
-                <el-menu-item index="2">
+                <el-menu-item index="/ner">
                     <i class="el-icon-menu"></i>
-                    <span slot="title">建设中...</span>
+                    <span slot="title">实体识别</span>
                 </el-menu-item>
+               
                 <el-menu-item index="3">
                     <i class="el-icon-document"></i>
                     <span slot="title">建设中...</span>
@@ -30,6 +31,7 @@
                     <i class="el-icon-setting"></i>
                     <span slot="title">建设中...</span>
                 </el-menu-item>
+                
                 </el-menu>
             </el-col>
         </el-aside>

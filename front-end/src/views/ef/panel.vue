@@ -21,7 +21,7 @@
             </el-submenu>
             <el-menu-item index="2">
                 <i class="el-icon-menu"></i>
-                <span slot="title">建设中...</span>
+                <span slot="title">实体识别</span>
             </el-menu-item>
             <el-menu-item index="3">
                 <i class="el-icon-document"></i>
