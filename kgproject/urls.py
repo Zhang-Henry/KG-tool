@@ -31,4 +31,5 @@ urlpatterns = [
          views.get_relation, name='get_relation'),
     path('after_creation/', views.after_creation, name='after_creation'),
     path('nerText/', views.nerText, name='nerText'),
+    path('get_answer/', views.get_answer, name='get_answer'),
 ]

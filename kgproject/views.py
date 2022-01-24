@@ -4,17 +4,14 @@ from django.shortcuts import redirect  # 重定向
 from django.urls import reverse  # 反向解析
 from django.views import View  # 视图类需要
 from django.http import JsonResponse  # 相应json数据
-from datetime import datetime
 import json
 import os
 from django.views.decorators.csrf import csrf_exempt
-import time
-import uuid
 import re
 from . import config
 from .models.neo_models import Neo4j
 from .ner.ner import ner
-
+from  .QA.chatbot_graph import ChatBotGraph
 
 @csrf_exempt
 def upload_entity(request):
@@ -159,3 +156,16 @@ def nerText(request):
         content = ner(text)
         print(content)
     return HttpResponse(json.dumps(content, ensure_ascii=False), content_type="application/json")
+
+
+@csrf_exempt
+def get_answer(request):
+    if request.method == "POST":
+        question = request.POST.get("question")
+        handler = ChatBotGraph()
+        answer = handler.chat_main(question)
+        print('KG AI:', answer)
+    return HttpResponse(answer, content_type="application/json")
+
+
+
