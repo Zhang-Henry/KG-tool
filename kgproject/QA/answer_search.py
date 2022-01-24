@@ -1,9 +1,11 @@
+import imp
 from py2neo import Graph
+from kgproject import config
 
 
 class AnswerSearcher:
     def __init__(self):
-        self.g = Graph("http://localhost:7474", password="123456")
+        self.g = Graph(config.neo4j_url, password=config.password)
         self.num_limit = 20
 
     '''执行cypher查询，并返回相应结果'''
