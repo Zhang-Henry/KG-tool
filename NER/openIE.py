@@ -6,21 +6,20 @@ properties = {
     'openie.affinity_probability_cap': 2 / 3,
 }
 
-filename = "corpus/pg6130.txt"
+# input = "corpus/CNN.txt"
+input = "coref/coref_CNN.txt"
+
+output = "results/" + input.split("/")[1].split(".")[0] + ".txt"
+graph_image = 'graph/' + input.split("/")[1].split(".")[0] + ".png"
+
 with StanfordOpenIE(properties=properties) as client:
-    text = 'Barack Obama was born in Hawaii. Richard Manning wrote this sentence.'
-    print('Text: %s.' % text)
-    for triple in client.annotate(text):
-        print('|-', triple)
 
-    graph_image = 'graph.png'
-
-    with open(filename, encoding='utf8') as r:
+    with open(input, encoding='utf8') as r:
         corpus = r.read().replace('\n', ' ').replace('\r', '')
 
     triples_corpus = client.annotate(corpus[0:5000])
     print('Found %s triples in the corpus.' % len(triples_corpus))
-    with open("results.txt", "w") as o:
+    with open(output, "w") as o:
         for triple in triples_corpus:
             o.write(json.dumps(triple)+"\n")
     client.generate_graphviz_graph(corpus[0:5000], graph_image)
