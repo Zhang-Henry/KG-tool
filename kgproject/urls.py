@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+# from django.views.decorators.cache import cache_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,5 +32,7 @@ urlpatterns = [
          views.get_relation, name='get_relation'),
     path('after_creation/', views.after_creation, name='after_creation'),
     path('nerText/', views.nerText, name='nerText'),
+    # path('get_answer/', cache_page(60 * 15)(views.get_answer), name='get_answer'),
     path('get_answer/', views.get_answer, name='get_answer'),
+
 ]

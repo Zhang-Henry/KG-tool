@@ -11,7 +11,9 @@ import re
 from . import config
 from .models.neo_models import Neo4j
 from .ner.ner import ner
-from  .QA.chatbot_graph import ChatBotGraph
+from .QA.chatbot_graph import ChatBotGraph
+from django.core.cache import cache
+import dill
 
 @csrf_exempt
 def upload_entity(request):
@@ -158,14 +160,21 @@ def nerText(request):
     return HttpResponse(json.dumps(content, ensure_ascii=False), content_type="application/json")
 
 
+
 @csrf_exempt
 def get_answer(request):
     if request.method == "POST":
         question = request.POST.get("question")
+        # question = request.body.decode("utf-8")
+        print(question)
+        # if cache.get('handler') is None:
+        # if 'handler' in request.session:
+        #     handler = request.session['handler']
+        # else:
         handler = ChatBotGraph()
+            # pickled = dill.dumps(handler)
+            # request.session['handler'] = handler
+            # request.session.set_expiry(15*60)
         answer = handler.chat_main(question)
         print('KG AI:', answer)
     return HttpResponse(answer, content_type="application/json")
-
-
-
