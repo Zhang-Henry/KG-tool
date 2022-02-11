@@ -1,8 +1,4 @@
-from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render  # 渲染模板
-from django.shortcuts import redirect  # 重定向
-from django.urls import reverse  # 反向解析
-from django.views import View  # 视图类需要
+from django.http import HttpResponse
 from django.http import JsonResponse  # 相应json数据
 import json
 import os
@@ -12,8 +8,7 @@ from . import config
 from .models.neo_models import Neo4j
 from .ner.ner import ner
 from .QA.chatbot_graph import ChatBotGraph
-from django.core.cache import cache
-import dill
+from .models.query_db import Query_db
 
 @csrf_exempt
 def upload_entity(request):
@@ -138,15 +133,15 @@ def after_creation(request):  # 创建图谱后自动返回一个任意关系的
 
 @csrf_exempt
 def get_entity(request, entity_name):
-    neo4j = Neo4j()
-    info = neo4j.query_entity(entity_name)
+    query_db = Query_db()
+    info = query_db.query_entity(entity_name)
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
 
 
 @csrf_exempt
 def get_relation(request, relation_name):
-    neo4j = Neo4j()
-    data = neo4j.query_relation(relation_name)
+    query_db = Query_db()
+    data = query_db.query_relation(relation_name)
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type="application/json")
 
 
@@ -178,3 +173,14 @@ def get_answer(request):
         answer = handler.chat_main(question)
         print('KG AI:', answer)
     return HttpResponse(answer, content_type="application/json")
+
+# 通过name属性查询一个node，以及和它有关的所有关系
+@csrf_exempt
+def search_item(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        query_db = Query_db()
+        info = query_db.query_node(name)
+    return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
+
+

@@ -34,5 +34,5 @@ urlpatterns = [
     path('nerText/', views.nerText, name='nerText'),
     # path('get_answer/', cache_page(60 * 15)(views.get_answer), name='get_answer'),
     path('get_answer/', views.get_answer, name='get_answer'),
-
+    path('search_item/', views.search_item, name='search_item'),
 ]

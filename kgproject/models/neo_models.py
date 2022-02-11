@@ -1,6 +1,4 @@
 import json
-from logging import error
-from random import SystemRandom
 import pandas as pd
 from kgproject import config
 from py2neo import Graph, Node
@@ -245,96 +243,6 @@ class Neo4j():
             rel_type = self.id_relation[k]
             self.create_relationship(start_name, end_name, v, rel_type)
 
-    def deleteDuplicate(self, li):
-        temp_list = list(set([str(i) for i in li]))
-        li = [eval(i) for i in temp_list]
-        return li
-
-    def query_labels_relations(self):
-        # return the whole knowledge graph info
-        sql1 = "CALL db.labels()"
-        sql2 = "CALL db.relationshipTypes()"
-        entities = self.graph.run(sql1).data()
-        relations = self.graph.run(sql2).data()
-        # print(entities, relations)
-        entity_list = [e['label'] for e in entities]
-        relation_list = [r['relationshipType'] for r in relations]
-        return entity_list, relation_list
-
-    # 查找指定实体
-    def query_entity(self, entity_name):
-        info = {}
-        entities, relations = self.query_labels_relations()
-        sql = "MATCH (n:{0}) RETURN n LIMIT 25".format(entity_name)
-        entity = self.graph.run(sql).data()
-        # print(entity)
-        data = []
-        for e in entity:
-            instance = {}
-            instance['name'] = e['n']['name']
-            e['n'].pop('name')
-            for k, v in e['n'].items():
-                if isinstance(v, list):
-                    e['n'][k] = "; ".join(v)
-            instance['properties'] = e['n']
-            instance['category'] = entity_name
-            instance['symolSize'] = 80
-            data.append(instance)
-        info['data'] = data
-        info['entities'] = entities
-        info['relations'] = relations
-        return info
-
-    # 查找指定关系，使用py2neo接口查询
-    def query_relation(self, relation_name):
-        info = {}
-        data = []
-        links = []
-        all_entities, all_relations = self.query_labels_relations()
-        relations = self.graph.match(r_type=relation_name)
-        for r in relations:
-            start = r.nodes[0]
-            end = r.nodes[1]
-
-            # 给start node附属性
-            n1 = {}
-            n1['name'] = start['name']
-            n1['category'] = list(start.labels)[0]
-            n1['symolSize'] = 80
-            property_info = dict(start)
-            property_info.pop('name')
-            for k, v in property_info.items():
-                if isinstance(v, list):
-                    property_info[k] = "; ".join(v)
-            n1['properties'] = property_info
-
-            # 给end node附属性
-            n2 = {}
-            n2['name'] = end['name']
-            n2['category'] = list(end.labels)[0]
-            n2['symolSize'] = 80
-            property_info = dict(end)
-            property_info.pop('name')
-            for k, v in property_info.items():
-                if isinstance(v, list):
-                    property_info[k] = "; ".join(v)
-            n2['properties'] = property_info
-            data.append(n1)
-            data.append(n2)
-
-            # 关系json
-            link = {}
-            link['target'] = end['name']
-            link['source'] = start['name']
-            link['name'] = relation_name
-            links.append(link)
-
-        data = self.deleteDuplicate(data)  # 给实体去重
-        info['data'] = data
-        info['links'] = links
-        info['entities'] = all_entities
-        info['relations'] = all_relations
-        return info
 
     # 创建完图谱后返回第一个关系查询结果
     def random_relation(self):
