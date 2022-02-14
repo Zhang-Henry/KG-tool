@@ -126,3 +126,35 @@ def show_node_only(request):
         query_db = Query_db()
         info = query_db.query_node_only(name, label)
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
+
+
+@csrf_exempt
+def show_relation_only(request):
+    if request.method == "POST":
+        source = request.POST.get("source")
+        target = request.POST.get("target")
+        query_db = Query_db()
+        info = query_db.query_relation_only(source, target)
+    return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
+
+
+@csrf_exempt
+def delete_node(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        label = request.POST.get("category")
+        query_db = Query_db()
+        query_db.delete_node(name, label)
+        info = query_db.random_relation()
+    return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
+
+
+@csrf_exempt
+def delete_relation(request):
+    if request.method == "POST":
+        source = request.POST.get("source")
+        target = request.POST.get("target")
+        query_db = Query_db()
+        query_db.delete_relation(source, target)
+        info = query_db.random_relation()
+    return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")

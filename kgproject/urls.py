@@ -33,4 +33,10 @@ urlpatterns = [
     path('get_answer/', views.get_answer, name='get_answer'),
     path('search_item/', views.search_item, name='search_item'),
     path('show_node_only/', views.show_node_only, name='show_node_only'),
+    path('show_relation_only/', views.show_relation_only,
+         name='show_relation_only'),
+    path('delete_node/', views.delete_node,
+         name='delete_node'),
+    path('delete_relation/', views.delete_relation,
+         name='delete_relation'),
 ]
