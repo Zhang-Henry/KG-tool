@@ -10,74 +10,8 @@ from .ner.ner import ner
 from .QA.chatbot_graph import ChatBotGraph
 from .models.query_db import Query_db
 
-@csrf_exempt
-def upload_entity(request):
-    response = {}
-    try:
-        if request.method == 'POST':
-            req = request.FILES.get('file')
-            #  上传文件类型过滤
-            file_type = re.match(r'.*\.(csv|xlsx|xls)', req.name)
-            if not file_type:
-                response['code'] = 2
-                response['msg'] = '文件类型不匹配, 请重新上传'
-                return HttpResponse(json.dumps(response))
-            # 打开特定的文件进行二进制的写操作
-            destination = open(
-                os.path.join(config.BASE_IMPORT_URL, req.name), 'wb+')
-            for chunk in req.chunks():  # 分块写入文件
-                destination.write(chunk)
-            destination.close()
-
-            neo4j = Neo4j()
-            neo4j.saveEntity(req.name)  # save entity to neo4j
-
-            response['msg'] = "Success"
-            response['code'] = 200
-    except Exception as e:
-        response['msg'] = '服务器内部错误'
-        response['code'] = 1
-    return HttpResponse(json.dumps(response), content_type="application/json")
-
-
-@csrf_exempt
-def upload_relation(request):
-    response = {}
-    try:
-        if request.method == 'POST':
-            req = request.FILES.get('file')
-
-            #  上传文件类型过滤
-            file_type = re.match(r'.*\.(csv|xlsx|xls)', req.name)
-            if not file_type:
-                response['code'] = 2
-                response['msg'] = '文件类型不匹配, 请重新上传'
-                return HttpResponse(json.dumps(response))
-            # 打开特定的文件进行二进制的写操作
-            destination = open(
-                os.path.join(config.BASE_IMPORT_URL, req.name), 'wb+')
-            for chunk in req.chunks():  # 分块写入文件
-                destination.write(chunk)
-            destination.close()
-            response['msg'] = "Success"
-            response['code'] = 200
-            neo4j = Neo4j()
-            neo4j.saveRelation(req.name)  # save entity to neo4j
-    except Exception as e:
-        response['msg'] = '服务器内部错误'
-        response['code'] = 1
-    return HttpResponse(json.dumps(response), content_type="application/json")
-
-
-@csrf_exempt
-def return_kg(request):
-    neo4j = Neo4j()
-    kg_data = neo4j.query_all_nodes_relations_labels()  # save entity to neo4j
-    return JsonResponse(kg_data, safe=False)
 
 # 上传json文件，内容包括实体和关系
-
-
 @csrf_exempt
 def upload_json(request):
     response = {}
@@ -126,8 +60,8 @@ def create_graph(request, filename):
 
 @csrf_exempt
 def after_creation(request):  # 创建图谱后自动返回一个任意关系的查询
-    neo4j = Neo4j()
-    data = neo4j.random_relation()
+    query_db = Query_db()
+    data = query_db.random_relation()
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type="application/json")
 
 
@@ -184,3 +118,11 @@ def search_item(request):
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
 
 
+@csrf_exempt
+def show_node_only(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        label = request.POST.get("category")
+        query_db = Query_db()
+        info = query_db.query_node_only(name, label)
+    return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")

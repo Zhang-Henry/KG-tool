@@ -20,9 +20,6 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('uploadentity/', views.upload_entity, name='upload_entity'),
-    path('uploadrelation/', views.upload_relation, name='upload_relation'),
-    path('returnkg/', views.return_kg, name='return_kg'),
     path('uploadjson/', views.upload_json, name='upload_json'),
     path('attr/<str:filename>/', views.attr, name='attr'),
     path('creategraph/<str:filename>/', views.create_graph, name='create_graph'),
@@ -35,4 +32,5 @@ urlpatterns = [
     # path('get_answer/', cache_page(60 * 15)(views.get_answer), name='get_answer'),
     path('get_answer/', views.get_answer, name='get_answer'),
     path('search_item/', views.search_item, name='search_item'),
+    path('show_node_only/', views.show_node_only, name='show_node_only'),
 ]
