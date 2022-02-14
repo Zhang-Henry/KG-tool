@@ -17,6 +17,7 @@ class Neo4j():
         print("The neo4j database connected successfully")
         self.id_name = {}  # 建立实体name和id的对应关系
         self.id_relation = {}  # 建立relation和id的对应关系
+        self.id_transname = {} # 建立关系名称中文和id的对应关系
         self.entity_list = {}  # key为实体id，value为实体列表
         self.relations = []  # 实体类别之间的关系列表
         self.relation_dict = {}
@@ -24,100 +25,6 @@ class Neo4j():
         self.disease_infos = []
         # key为关系名称id，value为实体实例关系列表 - [[disease1, drug1],[disease1, drug1]]
         self.relation_list = {}
-
-    def saveEntity(self, file_name):
-        # the name of the uploaded file is the entity name
-        # pk stands for the primary key(unique, constraint)
-        file_path = os.path.join(config.BASE_IMPORT_URL, file_name)
-        df = pd.read_csv(file_path)
-        # cols = ["_".join(col.split(' ')) for col in df.columns] # handle strings with blank spaces
-        pk = df.columns[0]
-        attributes = [col+':'+'line.'+col for col in df.columns]
-        entity_type = file_name.split('.')[0]
-        command1 = 'LOAD CSV WITH HEADERS FROM "file:///' + file_name + \
-            '" AS line\nCREATE (p:' + entity_type + "{" + ",".join(
-                attributes) + "})\n"
-        # LOAD CSV WITH HEADERS  FROM "file:///hudong_pedia.csv" AS line
-        # CREATE(p: HudongItem{title: line.title, image: line.image, detail: line.detail, url: line.url, openTypeList: line.openTypeList, baseInfoKeyList: line.baseInfoKeyList, baseInfoValueList: line.baseInfoValueList})
-        self.graph.run(command1)
-        print(command1)
-        command2 = "CREATE CONSTRAINT ON (c:" + \
-            entity_type + ") " + "ASSERT c." + pk + " IS UNIQUE\n"
-        print(command2)
-        self.graph.run(command2)
-
-    def saveRelation(self, file_name):
-        file_path = os.path.join(config.BASE_IMPORT_URL, file_name)
-        df = pd.read_csv(file_path)
-        entity1, relation, entity2 = df.columns[0], df.columns[1], df.columns[2]
-        entity1_filepath = os.path.join(config.BASE_IMPORT_URL, entity1+".csv")
-        entity2_filepath = os.path.join(config.BASE_IMPORT_URL, entity2+".csv")
-        df1 = pd.read_csv(entity1_filepath)
-        df2 = pd.read_csv(entity2_filepath)
-        df1_pk, df2_pk = df1.columns[0], df2.columns[0]
-        command = """LOAD CSV WITH HEADERS FROM "file:///{0}" AS line
-        MATCH(entity1: {1}{{{3}: line.{1}}}), (entity2: {2}{{{4}: line.{2}}})
-        CREATE(entity1)-[:RELATION {{type: line.{5}}}] -> (entity2)""".format(file_name, entity1, entity2, df1_pk, df2_pk, relation)
-        print(command)
-        self.graph.run(command)
-
-    def query_all_nodes_relations_labels(self):
-        # command = """MATCH p=()-[r:RELATION]->()
-        # WITH COLLECT(p) AS ps
-        # CALL apoc.convert.toTree(ps) yield value
-        # RETURN value"""
-        # command2 = """CALL apoc.schema.nodes()
-        # YIELD name, label, properties, status, type"""
-        command1 = "CALL apoc.schema.nodes()"
-        schema = self.graph.run(command1).data()
-        all_info = {}
-        entities = []
-        links = []
-        pks = []
-        labels = []
-        for entity in schema:
-            label = entity['label']
-            pk = entity['properties'][0]
-            pks.append(pk)
-            command = """CALL apoc.search.nodeAll('{{{0}:"{1}"}}','contains','') YIELD node AS n RETURN n""".format(
-                label, pk)
-            data = self.graph.run(command).data()
-            for p in data:
-                entity_new = {}
-                entity_new['name'] = p['n'][pk]
-                properties = []
-                for k, v in p['n'].items():
-                    if k != pk:
-                        properties.append(str(k) + ": " + str(v))
-                des = ", ".join(properties)
-                entity_new['des'] = des
-                entity_new['category'] = label
-                entities.append(entity_new)
-        all_info['data'] = entities
-
-        command2 = "MATCH (n)-[r]-(m) RETURN *;"
-        relations = self.graph.run(command2).data()
-        for relation in relations:
-            relation_new = {}
-            for k, v in relation['m'].items():
-                if k in pks:
-                    relation_new['source'] = v
-            for k, v in relation['n'].items():
-                if k in pks:
-                    relation_new['target'] = v
-            relation_new['name'] = relation['r']['type']
-            links.append(relation_new)
-        all_info['links'] = links
-
-        command3 = "match (n) return distinct labels(n)"
-        label_data = self.graph.run(command3).data()
-        for data in label_data:
-            labels.append(data['labels(n)'][0])
-        all_info['labels'] = labels
-
-        # with open("data.json",'w+') as f:
-        #     f.write(str(all_info))
-        return all_info
 
     def all_attr(self, filename):
         path = os.path.join(config.BASE_IMPORT_URL, filename) + ".json"
@@ -148,8 +55,9 @@ class Neo4j():
             self.relations.append(relation)
             self.relation_dict[relation['lineId']] = relation
             self.id_relation[relation['lineId']] = relation['label']
+            self.id_relation[relation['lineId']] = relation['trans_name']
             self.relation_list[relation['lineId']] = []
-        keys = self.all_attr(filename)
+        # keys = self.all_attr(filename)
 
         # 读取json文件数据
         path = os.path.join(config.BASE_IMPORT_URL, filename) + ".json"
@@ -193,7 +101,7 @@ class Neo4j():
 
     '''创建实体关联边'''
 
-    def create_relationship(self, start_node, end_node, edges, rel_type):
+    def create_relationship(self, start_node, end_node, edges, rel_type, trans_name):
         count = 0
         # 去重处理
         set_edges = []
@@ -204,8 +112,8 @@ class Neo4j():
             edge = edge.split('###')
             p = edge[0]
             q = edge[1]
-            query = "match(p:%s),(q:%s) where p.name='%s'and q.name='%s' create (p)-[rel:%s]->(q)" % (
-                start_node, end_node, p, q, rel_type)
+            query = "match(p:%s),(q:%s) where p.name='%s'and q.name='%s' create (p)-[rel:%s{name:'%s'}]->(q)" % (
+                start_node, end_node, p, q, rel_type, trans_name)
             try:
                 self.graph.run(query)
                 count += 1
@@ -241,13 +149,7 @@ class Neo4j():
             end_id = self.relation_dict[k]['to']
             end_name = self.id_name[end_id]
             rel_type = self.id_relation[k]
-            self.create_relationship(start_name, end_name, v, rel_type)
+            trans_name = self.id_transname[k]
+            self.create_relationship(
+                start_name, end_name, v, rel_type, trans_name)
 
-
-    # 创建完图谱后返回第一个关系查询结果
-    def random_relation(self):
-        sql = "CALL db.relationshipTypes()"
-        relations = self.graph.run(sql).data()
-        relation_list = [r['relationshipType'] for r in relations]
-        if len(relation_list) > 0:
-            return self.query_relation(relation_list[0])
