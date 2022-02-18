@@ -18,6 +18,9 @@
     - [问答结果展示](#问答结果展示)
     - [实现原理](#实现原理)
       - [问句类型分类](#问句类型分类)
+      - [问句解析](#问句解析)
+      - [问题查询](#问题查询)
+      - [问答程序](#问答程序)
 
 # 技术架构
 **前后端分离**
@@ -234,12 +237,15 @@ pip3 install -r requirements.txt
 例如，假设有b，abc，abd，bcd，abcd，efg，hii 这6个单词,那我们创建trie树就得到
 ![Trie树](image/trie.png)
 
-- question_parser.py：问句解析脚本
+#### 问句解析
+question_parser.py
   - 根据分类的问题类型，生成对应的Cypher查询语句。
-- answer_search.py：问题查询脚本
+#### 问题查询
+answer_search.py
   - 执行cypher查询，并返回相应结果。
   - 根据对应的问题类型，调用相应的回复模板
-- chatbot_graph.py：问答程序脚本
+#### 问答程序
+chatbot_graph.py
   - 整合上面三个类。先将问题分类，再进行解析，查询，最后完成问题。
 
 
