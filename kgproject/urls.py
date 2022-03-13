@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from . import views
 # from django.views.decorators.cache import cache_page
 
@@ -39,4 +39,8 @@ urlpatterns = [
          name='delete_node'),
     path('delete_relation/', views.delete_relation,
          name='delete_relation'),
+    path('relation_entity_extraction/', views.relation_entity_extraction,
+         name='relation_entity_extraction'),
+    path('get_progress/', views.get_progress, name='get_progress'),
+    path('polls/', include('polls.urls')),
 ]
