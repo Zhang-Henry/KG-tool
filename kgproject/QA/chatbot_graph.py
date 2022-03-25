@@ -23,6 +23,9 @@ class ChatBotGraph:
         else:
             return '\n'.join(final_answers)
 
+
+handler = ChatBotGraph()
+
 # if __name__ == '__main__':
 #     handler = ChatBotGraph()
 #     while 1:

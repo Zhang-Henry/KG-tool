@@ -7,6 +7,7 @@ from . import config
 from .models.neo_models import Neo4j
 from .ner.ner import ner
 from .QA.chatbot_graph import ChatBotGraph
+from .QA.chatbot_graph import handler
 from .models.query_db import Query_db
 from .Relation_entity.inference import *
 import time
@@ -109,16 +110,8 @@ def nerText(request):
 def get_answer(request):
     if request.method == "POST":
         question = request.POST.get("question")
-        # question = request.body.decode("utf-8")
         print(question)
-        # if cache.get('handler') is None:
-        # if 'handler' in request.session:
-        #     handler = request.session['handler']
-        # else:
-        handler = ChatBotGraph()
-            # pickled = dill.dumps(handler)
-            # request.session['handler'] = handler
-            # request.session.set_expiry(15*60)
+        # handler = ChatBotGraph()
         answer = handler.chat_main(question)
         print('KG AI:', answer)
     return HttpResponse(answer, content_type="application/json")
@@ -130,6 +123,7 @@ def search_item(request):
         name = request.POST.get("name")
         query_db = Query_db()
         info = query_db.query_node(name)
+        print(info)
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
 
 
@@ -140,6 +134,7 @@ def show_node_only(request):
         label = request.POST.get("category")
         query_db = Query_db()
         info = query_db.query_node_only(name, label)
+        print(info)
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
 
 
@@ -178,10 +173,16 @@ def delete_relation(request):
 @csrf_exempt
 def relation_entity_extraction(request):
     if request.method == "POST":
-        text = request.POST.get("text")
+        # text = request.POST.get("text")
+        data = json.loads(request.body)
+        text = data['text']
+        print(text)
         entity_list = prediction(text)
+        print(entity_list)
         relation_list = template_relation(entity_list, text)
+        print(relation_list)
         data_list = get_json_data(relation_list)
+        print(data_list)
         info = {
             'entity_list': entity_list,
             'relation_list': relation_list,

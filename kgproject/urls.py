@@ -43,4 +43,5 @@ urlpatterns = [
          name='relation_entity_extraction'),
     path('get_progress/', views.get_progress, name='get_progress'),
     path('polls/', include('polls.urls')),
+    path('dialogue/', include('dialogue.urls')),
 ]

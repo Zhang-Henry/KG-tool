@@ -1,7 +1,6 @@
 from kgproject import config
-from py2neo import Graph, Node
+from py2neo import Graph,Node
 import sys
-import pandas as pd
 sys.path.append("..")
 
 
