@@ -34,11 +34,11 @@
 - 算法编程语言：`Python3`
 # 环境安装
 
-这个项目使用的所有库都在[requirements.txt](requirements.txt)。请在本地安装虚拟环境，并确保安装了它们。d
+这个项目使用的所有库都在[requirements.txt](requirements.txt)。请在本地安装虚拟环境，并确保安装了它们。
 
 ```sh
 # create virtual environment (for example, conda)
-conda create -n kg python=3.8
+conda create -n kg python=3.6
 conda activate kg
 pip3 install -r requirements.txt
 ```
