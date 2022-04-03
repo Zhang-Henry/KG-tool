@@ -46,7 +46,9 @@ pip3 install -r requirements.txt
 # 功能列表
 ## 1. 知识图谱的构建
 ### 通过结构化数据构建 - Json文件构建
-1. 在点击疾病文件后，选择[medical.json](/data/medical.json)(完整数据)，或者[part_medical.json](/data/part_medical.json)(部分数据)，或者按照**指定格式**自行构造数据上传。文件会默认上传到Neo4j数据库的import文件夹下。此路径可以在[config.py](/kgproject/config.py)的`BASE_IMPORT_URL`变量中设置。
+1. 首先创建图谱名。如果图谱名已经存在于数据库，则会提示名字重复。否则添加图谱名到数据库。
+
+在点击疾病文件后，选择[medical.json](/data/medical.json)(完整数据)，或者[part_medical.json](/data/part_medical.json)(部分数据)，或者按照**指定格式**自行构造数据上传。文件会默认上传到Neo4j数据库的import文件夹下。此路径可以在[config.py](/kgproject/config.py)的`BASE_IMPORT_URL`变量中设置。
 
 
 ![上传文件](./image/上传文件.png)
@@ -114,6 +116,9 @@ pip3 install -r requirements.txt
 ### 通过非结构化数据构建
 1. 命名实体识别，关系抽取
 2. 通过实体的类型、关系类型构建图谱
+
+### 知识图谱的管理
+
 ## 2. 实体及关系识别
 ### 2.1 基于BART的实体关系联合抽取
 训练分为两部分：
