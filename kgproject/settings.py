@@ -144,7 +144,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -158,11 +158,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-#         'LOCATION': 'unique-snowflake',
-#     }
-# }
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 
-# SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'

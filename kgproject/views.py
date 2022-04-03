@@ -6,8 +6,7 @@ import re
 from . import config
 from .models.neo_models import Neo4j
 from .ner.ner import ner
-from .QA.chatbot_graph import ChatBotGraph
-from .QA.chatbot_graph import handler
+# from .QA.chatbot_graph import handler
 from .models.query_db import Query_db
 from .Relation_entity.inference import *
 import time
@@ -108,13 +107,15 @@ def nerText(request):
 
 @csrf_exempt
 def get_answer(request):
-    if request.method == "POST":
-        question = request.POST.get("question")
-        print(question)
-        # handler = ChatBotGraph()
-        answer = handler.chat_main(question)
-        print('KG AI:', answer)
-    return HttpResponse(answer, content_type="application/json")
+    # if request.method == "POST":
+    #     question = request.POST.get("question")
+    #     print(question)
+    #     # handler = ChatBotGraph()
+    #     answer = handler.chat_main(question)
+    #     print('KG AI:', answer)
+    # return HttpResponse(answer, content_type="application/json")
+    return HttpResponse("pass")
+
 
 # 通过name属性查询一个node，以及和它有关的所有关系
 @csrf_exempt

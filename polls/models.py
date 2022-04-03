@@ -3,14 +3,15 @@ from django.db import models
 
 
 class KG(models.Model):
-    kg_name = models.CharField(max_length=1000, primary_key=True)
-
+    name = models.CharField(max_length=1000, primary_key=True)
+    date = models.CharField(max_length=100)
+    type = models.CharField(max_length=100)
 
 class Label(models.Model):
-    kg_name = models.ForeignKey(KG, on_delete=models.CASCADE)
-    label_name = models.CharField(max_length=1000)
+    kg = models.ForeignKey(KG, on_delete=models.CASCADE)
+    name = models.CharField(max_length=1000)
 
 
 class Relation(models.Model):
-    kg_name = models.ForeignKey(KG, on_delete=models.CASCADE)
-    relation_name = models.CharField(max_length=1000)
+    kg = models.ForeignKey(KG, on_delete=models.CASCADE)
+    name = models.CharField(max_length=1000)

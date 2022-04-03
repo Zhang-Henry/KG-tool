@@ -143,3 +143,11 @@ class Query_db():
         sql = 'match (n{{name:"{0}"}})-[r]-(m{{name:"{1}"}}) delete r'.format(
             source, target)
         self.graph.run(sql)
+
+    # 根据图谱名字，删除整个图谱
+    def delete_graph(self, graph_name):
+        sql1 = 'match (n)-[r{{graphName: "{0}"}}]-(m) delete n,m,r'.format(graph_name)
+        sql2 = 'match (n{{graphName:"{0}"}}) delete n'.format(graph_name)
+        self.graph.run(sql1)
+        self.graph.run(sql2)
+

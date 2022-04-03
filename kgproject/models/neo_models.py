@@ -3,9 +3,10 @@ from kgproject import config
 from py2neo import Graph, Node
 import os
 import sys
+from ..config import *
 from tqdm import tqdm
 sys.path.append("..")
-
+from django.core.cache import cache
 
 class Neo4j():
     graph = None
@@ -91,7 +92,7 @@ class Neo4j():
     def create_node(self, label, nodes):
         print("Creating nodes...")
         for node_name in tqdm(nodes):
-            node = Node(label, name=node_name)
+            node = Node(label, name=node_name, graphName= cache.get('current_graph'))
             self.graph.create(node)
         return
 
@@ -107,8 +108,8 @@ class Neo4j():
             edge = edge.split('###')
             p = edge[0]
             q = edge[1]
-            query = "match(p:%s),(q:%s) where p.name='%s'and q.name='%s' create (p)-[rel:%s{name:'%s'}]->(q)" % (
-                start_node, end_node, p, q, rel_type, transName)
+            query = "match(p:%s),(q:%s) where p.name='%s'and q.name='%s' create (p)-[rel:%s{name:'%s', graphName:'%s'}]->(q)" % (
+                start_node, end_node, p, q, rel_type, transName, cache.get('current_graph'))
             try:
                 self.graph.run(query)
             except Exception as e:
@@ -120,7 +121,7 @@ class Neo4j():
     def create_diseases_nodes(self, disease_infos):
         print("Creating disease nodes...")
         for disease_dict in tqdm(disease_infos):
-            node = Node("Disease", name=disease_dict['name'])
+            node = Node("Disease", name=disease_dict['name'], graphName= cache.get('current_graph'))
             disease_dict.pop('name')
             node.update(disease_dict)
             self.graph.create(node)

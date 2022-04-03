@@ -29,7 +29,6 @@ urlpatterns = [
          views.get_relation, name='get_relation'),
     path('after_creation/', views.after_creation, name='after_creation'),
     path('nerText/', views.nerText, name='nerText'),
-    # path('get_answer/', cache_page(60 * 15)(views.get_answer), name='get_answer'),
     path('get_answer/', views.get_answer, name='get_answer'),
     path('search_item/', views.search_item, name='search_item'),
     path('show_node_only/', views.show_node_only, name='show_node_only'),
