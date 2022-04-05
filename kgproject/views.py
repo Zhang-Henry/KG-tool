@@ -121,7 +121,9 @@ def get_answer(request):
 @csrf_exempt
 def search_item(request):
     if request.method == "POST":
-        name = request.POST.get("name")
+        # name = request.POST.get("name")
+        data = json.loads(request.body)
+        name = data['name']
         query_db = Query_db()
         info = query_db.query_node(name)
         print(info)
@@ -131,8 +133,11 @@ def search_item(request):
 @csrf_exempt
 def show_node_only(request):
     if request.method == "POST":
-        name = request.POST.get("name")
-        label = request.POST.get("category")
+        data = json.loads(request.body)
+        # name = request.POST.get("name")
+        # label = request.POST.get("category")
+        name = data['name']
+        label = data['category']
         query_db = Query_db()
         info = query_db.query_node_only(name, label)
         print(info)
@@ -152,8 +157,11 @@ def show_relation_only(request):
 @csrf_exempt
 def delete_node(request):
     if request.method == "POST":
-        name = request.POST.get("name")
-        label = request.POST.get("category")
+        data = json.loads(request.body)
+        name = data['name']
+        label = data['label']
+        # name = request.POST.get("name")
+        # label = request.POST.get("category")
         query_db = Query_db()
         query_db.delete_node(name, label)
         info = query_db.random_relation()
@@ -163,8 +171,11 @@ def delete_node(request):
 @csrf_exempt
 def delete_relation(request):
     if request.method == "POST":
-        source = request.POST.get("source")
-        target = request.POST.get("target")
+        data = json.loads(request.body)
+        source = data['source']
+        target = data['target']
+        # source = request.POST.get("source")
+        # target = request.POST.get("target")
         query_db = Query_db()
         query_db.delete_relation(source, target)
         info = query_db.random_relation()

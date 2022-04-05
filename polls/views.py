@@ -61,9 +61,9 @@ def all_graph_info(request):
 @csrf_exempt
 def delete_graph(request):
     if request.method == "POST":
-        # data = json.loads(request.body)
-        # kg_name = data['name']
-        kg_name = request.POST.get('name')
+        data = json.loads(request.body)
+        kg_name = data['name']
+        # kg_name = request.POST.get('name')
         kgs = KG.objects.filter(name=kg_name)
         if kgs.exists():
           kgs.delete()
