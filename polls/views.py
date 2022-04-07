@@ -73,3 +73,14 @@ def delete_graph(request):
         else:
           msg = "Graph name does not exist."
     return HttpResponse(msg)
+
+
+@csrf_exempt
+def show_select_graph(request):
+    if request.method == "POST":
+        # data = json.loads(request.body)
+        # kg_name = data['name']
+        kg_name = request.POST.get('name')
+        query_db = Query_db()
+        info = query_db.select_graph(kg_name)
+    return HttpResponse(json.dumps(info), content_type="application/json")

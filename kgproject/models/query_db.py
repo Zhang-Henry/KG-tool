@@ -151,3 +151,7 @@ class Query_db():
         self.graph.run(sql1)
         self.graph.run(sql2)
 
+    def select_graph(self, name):
+        sql = 'match (n{{graphName: "{0}"}})-[r{{graphName: "{0}"}}]-(m{{graphName: "{0}"}}) return n,m,r limit 25'.format(name)
+        info = self.format_relation(sql)
+        return info
