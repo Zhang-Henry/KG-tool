@@ -66,9 +66,9 @@ def delete_graph(request):
         # kg_name = request.POST.get('name')
         kgs = KG.objects.filter(name=kg_name)
         if kgs.exists():
-          kgs.delete()
           query_db = Query_db()
           query_db.delete_graph(kg_name)
+          kgs.delete()
           msg = "success"
         else:
           msg = "Graph name does not exist."
@@ -78,9 +78,9 @@ def delete_graph(request):
 @csrf_exempt
 def show_select_graph(request):
     if request.method == "POST":
-        # data = json.loads(request.body)
-        # kg_name = data['name']
-        kg_name = request.POST.get('name')
+        data = json.loads(request.body)
+        kg_name = data['name']
+        # kg_name = request.POST.get('name')
         query_db = Query_db()
         info = query_db.select_graph(kg_name)
     return HttpResponse(json.dumps(info), content_type="application/json")

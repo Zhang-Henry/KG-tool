@@ -159,7 +159,7 @@ def delete_node(request):
     if request.method == "POST":
         data = json.loads(request.body)
         name = data['name']
-        label = data['label']
+        label = data['category']
         # name = request.POST.get("name")
         # label = request.POST.get("category")
         query_db = Query_db()

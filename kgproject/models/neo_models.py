@@ -108,8 +108,8 @@ class Neo4j():
             edge = edge.split('###')
             p = edge[0]
             q = edge[1]
-            query = "match(p:%s),(q:%s) where p.name='%s'and q.name='%s' create (p)-[rel:%s{name:'%s', graphName:'%s'}]->(q)" % (
-                start_node, end_node, p, q, rel_type, transName, cache.get('current_graph'))
+            query = "match(p:%s),(q:%s) where p.name='%s' and q.name='%s' and p.graphName='%s' and q.graphName='%s' create (p)-[rel:%s{name:'%s', graphName:'%s'}]->(q)" % (
+                start_node, end_node, p, q, cache.get('current_graph'), cache.get('current_graph'), rel_type, transName, cache.get('current_graph'))
             try:
                 self.graph.run(query)
             except Exception as e:
