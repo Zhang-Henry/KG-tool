@@ -123,7 +123,8 @@ def search_item(request):
     if request.method == "POST":
         # name = request.POST.get("name")
         data = json.loads(request.body)
-        name = data['name']
+        # print(data)
+        name = data['item']
         query_db = Query_db()
         info = query_db.query_node(name)
         print(info)
@@ -147,8 +148,11 @@ def show_node_only(request):
 @csrf_exempt
 def show_relation_only(request):
     if request.method == "POST":
-        source = request.POST.get("source")
-        target = request.POST.get("target")
+        data = json.loads(request.body)
+        source = data['source']
+        target = data['target']
+        # source = request.POST.get("source")
+        # target = request.POST.get("target")
         query_db = Query_db()
         info = query_db.query_relation_only(source, target)
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
