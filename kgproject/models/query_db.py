@@ -2,6 +2,7 @@ from kgproject import config
 from py2neo import Graph,Node
 import sys
 sys.path.append("..")
+from django.core.cache import cache
 
 
 class Query_db():
@@ -82,7 +83,8 @@ class Query_db():
     def query_entity(self, entity_name):
         info = {}
         all_entities, all_relations = self.query_labels_relations()
-        sql = "MATCH (n:{0}) RETURN n LIMIT 25".format(entity_name)
+        sql = 'MATCH (n:{0}{{graphName: "{1}"}}) RETURN n LIMIT 25'.format(entity_name,cache.get('current_graph'))
+
         entitys = self.graph.run(sql).data()
         # print(entity)
         data = []
@@ -94,7 +96,7 @@ class Query_db():
 
     # 查找指定关系，使用py2neo接口查询
     def query_relation(self, relation_name):
-        sql = "match (n)-[r:{}]-(m) return n,m,r limit 25".format(relation_name)
+        sql = 'match (n{{graphName: "{1}"}})-[r:{0}{{graphName: "{1}"}}]-(m{{graphName: "{1}"}}) return n,m,r limit 25'.format(relation_name,cache.get('current_graph'))
         info = self.format_relation(sql)
         return info
 
@@ -114,34 +116,34 @@ class Query_db():
 
     # 通过name属性查询一个node，以及和它有关的所有关系
     def query_node(self, name):
-        sql = 'match (n{{name:"{0}"}})-[r]-(m) return n,m,r'.format(name)
+        sql = 'match (n{{name:"{0}",graphName: "{1}"}})-[r{{graphName: "{1}"}}]-(m{{graphName: "{1}"}}) return n,m,r'.format(name,cache.get('current_graph'))
         info = self.format_relation(sql)
         return info
 
     # 查找单个节点
     def query_node_only(self, name, label):
-        sql = 'match (n:{0}{{name:"{1}"}})-[r]-(m) return n,m,r'.format(label, name)
+        sql = 'match (n:{0}{{name:"{1}",graphName: "{1}"}})-[r{{graphName: "{1}"}}]-(m{{graphName: "{1}"}}) return n,m,r'.format(label, name,cache.get('current_graph'))
         info = self.format_relation(sql)
         return info
 
     # 查找单个关系
     def query_relation_only(self, source, target):
-        sql = 'match (n{{name:"{0}"}})-[r]-(m{{name:"{1}"}}) return n,m,r'.format(
-            source, target)
+        sql = 'match (n{{name:"{0}",graphName: "{1}"}})-[r{{graphName: "{1}"}}]-(m{{name:"{1}",graphName: "{1}"}}) return n,m,r'.format(
+            source, target,cache.get('current_graph'))
         info = self.format_relation(sql)
         return info
 
     # 删除单个节点，和他有关的关系
     def delete_node(self, name, label):
-        sql1 = 'match (n:{0}{{name:"{1}"}})-[r]-() delete n,r'.format(label,name) #删除和节点有关的关系和节点本身
-        sql2 = 'match (n:{0}{{name:"{1}"}}) delete n'.format(label,name) #删除没有关系的独立节点
+        sql1 = 'match (n:{0}{{name:"{1}",graphName: "{1}"}})-[r{{graphName: "{1}"}}]-() delete n,r'.format(label,name,cache.get('current_graph')) #删除和节点有关的关系和节点本身
+        sql2 = 'match (n:{0}{{name:"{1}",graphName: "{1}"}}) delete n'.format(label,name,cache.get('current_graph')) #删除没有关系的独立节点
         self.graph.run(sql1)
         self.graph.run(sql2)
 
     # 删除单个关系
     def delete_relation(self, source, target):
-        sql = 'match (n{{name:"{0}"}})-[r]-(m{{name:"{1}"}}) delete r'.format(
-            source, target)
+        sql = 'match (n{{name:"{0}",graphName: "{1}"}})-[r{{graphName: "{1}"}}]-(m{{name:"{1}",graphName: "{1}"}}) delete r'.format(
+            source, target,cache.get('current_graph'))
         self.graph.run(sql)
 
     # 根据图谱名字，删除整个图谱

@@ -81,6 +81,7 @@ def show_select_graph(request):
         data = json.loads(request.body)
         kg_name = data['name']
         # kg_name = request.POST.get('name')
+        cache.set('current_graph', kg_name, None)
         query_db = Query_db()
         info = query_db.select_graph(kg_name)
     return HttpResponse(json.dumps(info), content_type="application/json")
