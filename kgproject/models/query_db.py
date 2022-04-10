@@ -122,27 +122,28 @@ class Query_db():
 
     # 查找单个节点
     def query_node_only(self, name, label):
-        sql = 'match (n:{0}{{name:"{1}",graphName: "{1}"}})-[r{{graphName: "{1}"}}]-(m{{graphName: "{1}"}}) return n,m,r'.format(label, name,cache.get('current_graph'))
+        sql = 'match (n:{0}{{name:"{1}",graphName: "{2}"}})-[r{{graphName: "{2}"}}]-(m{{graphName: "{2}"}}) return n,m,r'.format(label, name,cache.get('current_graph'))
+        # print(sql)
         info = self.format_relation(sql)
         return info
 
     # 查找单个关系
     def query_relation_only(self, source, target):
-        sql = 'match (n{{name:"{0}",graphName: "{1}"}})-[r{{graphName: "{1}"}}]-(m{{name:"{1}",graphName: "{1}"}}) return n,m,r'.format(
+        sql = 'match (n{{name:"{0}",graphName: "{2}"}})-[r{{graphName: "{2}"}}]-(m{{name:"{1}",graphName: "{2}"}}) return n,m,r'.format(
             source, target,cache.get('current_graph'))
         info = self.format_relation(sql)
         return info
 
     # 删除单个节点，和他有关的关系
     def delete_node(self, name, label):
-        sql1 = 'match (n:{0}{{name:"{1}",graphName: "{1}"}})-[r{{graphName: "{1}"}}]-() delete n,r'.format(label,name,cache.get('current_graph')) #删除和节点有关的关系和节点本身
-        sql2 = 'match (n:{0}{{name:"{1}",graphName: "{1}"}}) delete n'.format(label,name,cache.get('current_graph')) #删除没有关系的独立节点
+        sql1 = 'match (n:{0}{{name:"{1}",graphName: "{2}"}})-[r{{graphName: "{2}"}}]-() delete n,r'.format(label,name,cache.get('current_graph')) #删除和节点有关的关系和节点本身
+        sql2 = 'match (n:{0}{{name:"{1}",graphName: "{2}"}}) delete n'.format(label,name,cache.get('current_graph')) #删除没有关系的独立节点
         self.graph.run(sql1)
         self.graph.run(sql2)
 
     # 删除单个关系
     def delete_relation(self, source, target):
-        sql = 'match (n{{name:"{0}",graphName: "{1}"}})-[r{{graphName: "{1}"}}]-(m{{name:"{1}",graphName: "{1}"}}) delete r'.format(
+        sql = 'match (n{{name:"{0}",graphName: "{2}"}})-[r{{graphName: "{2}"}}]-(m{{name:"{1}",graphName: "{2}"}}) delete r'.format(
             source, target,cache.get('current_graph'))
         self.graph.run(sql)
 

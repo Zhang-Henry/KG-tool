@@ -135,6 +135,7 @@ def search_item(request):
 def show_node_only(request):
     if request.method == "POST":
         data = json.loads(request.body)
+        print(data)
         # name = request.POST.get("name")
         # label = request.POST.get("category")
         name = data['name']
