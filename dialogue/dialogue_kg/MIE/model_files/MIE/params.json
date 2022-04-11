@@ -1,6 +1,0 @@
-{
-    "add_global": false,
-    "num_units": 400,
-    "num_layers": 4,
-    "keep_p": 0.8
-}
