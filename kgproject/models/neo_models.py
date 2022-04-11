@@ -144,3 +144,4 @@ class Neo4j():
             self.create_relationship(
                 start_name, end_name, v, rel_type, transName)
 
+neo4j = Neo4j()

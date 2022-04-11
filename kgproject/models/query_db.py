@@ -106,12 +106,12 @@ class Query_db():
         return li
 
     # 创建完图谱后返回第一个关系查询结果
-    def random_relation(self):
-        sql = "CALL db.relationshipTypes()"
-        relations = self.graph.run(sql).data()
-        relation_list = [r['relationshipType'] for r in relations]
-        if len(relation_list) > 0:
-            return self.query_relation(relation_list[0])
+    # def random_relation(self):
+    #     sql = "CALL db.relationshipTypes()"
+    #     relations = self.graph.run(sql).data()
+    #     relation_list = [r['relationshipType'] for r in relations]
+    #     if len(relation_list) > 0:
+    #         return self.query_relation(relation_list[0])
 
     # 通过name属性查询一个node，以及和它有关的所有关系
     def query_node(self, name):
@@ -156,5 +156,10 @@ class Query_db():
 
     def select_graph(self, name):
         sql = 'match (n{{graphName: "{0}"}})-[r{{graphName: "{0}"}}]-(m{{graphName: "{0}"}}) return n,m,r limit 25'.format(name)
+        print(sql)
         info = self.format_relation(sql)
+        print(info)
         return info
+
+
+query_db = Query_db()

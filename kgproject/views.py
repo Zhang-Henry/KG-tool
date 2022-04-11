@@ -4,10 +4,10 @@ import os
 from django.views.decorators.csrf import csrf_exempt
 import re
 from . import config
-from .models.neo_models import Neo4j
+from .models.neo_models import neo4j
 from .ner.ner import ner
 # from .QA.chatbot_graph import handler
-from .models.query_db import Query_db
+from .models.query_db import query_db
 from .Relation_entity.inference import *
 import time
 from django.core.cache import cache
@@ -38,7 +38,6 @@ def upload_json(request):
 
 @csrf_exempt
 def attr(request, filename):
-    neo4j = Neo4j()
     data_json = dict()
     data_json["attri"] = neo4j.all_attr(filename)
     # print(data_json)
@@ -50,7 +49,6 @@ num_progress = 0
 
 @csrf_exempt
 def create_graph(request, filename):
-    neo4j = Neo4j()
     global num_progress
     if request.method == 'POST':
         # graph_info = request.POST.get("流程B")  # 获取前端创建的节点、关系信息
@@ -75,21 +73,18 @@ def get_progress(request):
 
 @csrf_exempt
 def after_creation(request):  # 创建图谱后自动返回一个任意关系的查询
-    query_db = Query_db()
     data = query_db.select_graph(cache.get('current_graph'))
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type="application/json")
 
 
 @csrf_exempt
 def get_entity(request, entity_name):
-    query_db = Query_db()
     info = query_db.query_entity(entity_name)
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
 
 
 @csrf_exempt
 def get_relation(request, relation_name):
-    query_db = Query_db()
     data = query_db.query_relation(relation_name)
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type="application/json")
 
@@ -125,7 +120,6 @@ def search_item(request):
         data = json.loads(request.body)
         # print(data)
         name = data['item']
-        query_db = Query_db()
         info = query_db.query_node(name)
         print(info)
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
@@ -140,7 +134,6 @@ def show_node_only(request):
         # label = request.POST.get("category")
         name = data['name']
         label = data['category']
-        query_db = Query_db()
         info = query_db.query_node_only(name, label)
         print(info)
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
@@ -154,7 +147,6 @@ def show_relation_only(request):
         target = data['target']
         # source = request.POST.get("source")
         # target = request.POST.get("target")
-        query_db = Query_db()
         info = query_db.query_relation_only(source, target)
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
 
@@ -167,7 +159,6 @@ def delete_node(request):
         label = data['category']
         # name = request.POST.get("name")
         # label = request.POST.get("category")
-        query_db = Query_db()
         info = query_db.delete_node(name, label)
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
 
@@ -180,7 +171,6 @@ def delete_relation(request):
         target = data['target']
         # source = request.POST.get("source")
         # target = request.POST.get("target")
-        query_db = Query_db()
         info = query_db.delete_relation(source, target)
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
 

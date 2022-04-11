@@ -3,7 +3,7 @@ import json
 from django.http import HttpResponse
 from polls.models import *
 from django.core.cache import cache
-from kgproject.models.query_db import Query_db
+from kgproject.models.query_db import query_db
 
 # Create your views here.
 @csrf_exempt
@@ -66,7 +66,6 @@ def delete_graph(request):
         # kg_name = request.POST.get('name')
         kgs = KG.objects.filter(name=kg_name)
         if kgs.exists():
-          query_db = Query_db()
           query_db.delete_graph(kg_name)
           kgs.delete()
           msg = "success"
@@ -82,6 +81,5 @@ def show_select_graph(request):
         kg_name = data['name']
         # kg_name = request.POST.get('name')
         cache.set('current_graph', kg_name, None)
-        query_db = Query_db()
         info = query_db.select_graph(kg_name)
     return HttpResponse(json.dumps(info), content_type="application/json")
