@@ -140,12 +140,13 @@ class Query_db():
         sql2 = 'match (n:{0}{{name:"{1}",graphName: "{2}"}}) delete n'.format(label,name,cache.get('current_graph')) #删除没有关系的独立节点
         self.graph.run(sql1)
         self.graph.run(sql2)
-
+        return self.select_graph(cache.get('current_graph'))
     # 删除单个关系
     def delete_relation(self, source, target):
         sql = 'match (n{{name:"{0}",graphName: "{2}"}})-[r{{graphName: "{2}"}}]-(m{{name:"{1}",graphName: "{2}"}}) delete r'.format(
             source, target,cache.get('current_graph'))
         self.graph.run(sql)
+        return self.select_graph(cache.get('current_graph'))
 
     # 根据图谱名字，删除整个图谱
     def delete_graph(self, graph_name):

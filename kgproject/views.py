@@ -10,7 +10,7 @@ from .ner.ner import ner
 from .models.query_db import Query_db
 from .Relation_entity.inference import *
 import time
-
+from django.core.cache import cache
 # 上传json文件，内容包括实体和关系
 @csrf_exempt
 def upload_json(request):
@@ -76,7 +76,7 @@ def get_progress(request):
 @csrf_exempt
 def after_creation(request):  # 创建图谱后自动返回一个任意关系的查询
     query_db = Query_db()
-    data = query_db.random_relation()
+    data = query_db.select_graph(cache.get('current_graph'))
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type="application/json")
 
 
@@ -168,8 +168,7 @@ def delete_node(request):
         # name = request.POST.get("name")
         # label = request.POST.get("category")
         query_db = Query_db()
-        query_db.delete_node(name, label)
-        info = query_db.random_relation()
+        info = query_db.delete_node(name, label)
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
 
 
@@ -182,8 +181,7 @@ def delete_relation(request):
         # source = request.POST.get("source")
         # target = request.POST.get("target")
         query_db = Query_db()
-        query_db.delete_relation(source, target)
-        info = query_db.random_relation()
+        info = query_db.delete_relation(source, target)
     return HttpResponse(json.dumps(info, ensure_ascii=False), content_type="application/json")
 
 
