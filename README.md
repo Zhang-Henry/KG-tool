@@ -163,14 +163,55 @@ pip3 install -r requirements.txt
 
 
 ## 2. 实体及关系识别
+命名实体识别和关系抽取作为信息抽取的重要子任务。近些年众多学者利用多种技术在该领域开展了深入研究。将这些技术应用于医学领域，抽取非结构化和半结构化的医学文本构建医学知识图谱，可服务于下游子任务。
+
 ### 2.1 基于BART的实体关系联合抽取
-训练分为两部分：
+在信息抽取领域，预训练模型已经取得了质的飞跃，语言模型预训练加上下游任务fine-tune基本上已经成为标配。
+#### BART简介
+BART的全称是Bidirectional and Auto-Regressive Transformers，顾名思义，就是兼具上下文语境信息和自回归特性的Transformer。BART吸收了BERT的bidirectional encoder和GPT的left-to-right decoder各自的特点，建立在标准的seq2seq Transformer model的基础之上，这使得它比BERT更适合文本生成的场景；相比GPT，也多了双向上下文语境信息。
+
+BART是一个BERT+GPT的结构，但相对于BERT中单一的[MASK] token进行替换的noise类型，BART在encoder端尝试了多种noise。其原因是: BERT的这种简单替换导致的是encoder端的输入携带了有关序列结构的一些信息，比如序列的长度等信息，而这些信息在文本生成任务中一般是不会提供给模型的。BART采用更加多样的noise，意图是破坏掉这些有关序列结构的信息，防止模型去“依赖”这样的信息。
+
+1. Token Masking: 就是BERT的方法----随机将token替换成[MASK]
+2. Token Deletion: 随机删去tokenText
+3. Infilling: 随机将一段连续的token，也称作span，替换成一个[MASK]，span的长度服从的泊松分布。
+4. Sentence Permutation: 将一个document的句子打乱
+5. Document Rotation: 从document序列中随机选择一个token，然后使得该token作为document的开头。
+
+#### 训练
+##### 基于模板的方法：
+1、实体
+> [entity] is a/an [type] entity.
+  [span] is not a named entity.
+
+2、关系
+> [entity 1] and [entity 2] are [type] relation.
+ [entity 1] and [entity 2] are not related.
+
+##### 用于Fine-tune的数据集：
+Adverse Drug Events (ADE) Corpus
+
+This is a systematically annotated corpus that can support the development and validation of methods for the automatic extraction of drug-related adverse effects from medical case reports.
+
+##### 训练
+分为两部分：
 - 实体识别
 ![实体识别](image/实体训练.png)
 - 关系提取
 ![关系提取](image/关系训练.png)
 两部分采用共享参数方式进行训练
 ![共享参数](image/参数共享.png)
+
+##### 推断
+方法：
+1. 用实体模板，识别出句子中的实体
+2. 用关系模板，识别出关系
+
+可解决的问题：
+1. 实体嵌套：一个span一个span识别
+2. 关系重叠：实体的组合、嵌套实体识别出
+
+
 ### 2.2 基于SOTA工具
 - 实体关系识别（NER）：[Spacy 2.3.7](https://spacy.io/)
 - 共指消解（Coreference resolution）: [neuralcoref 4.0](https://spacy.io/universe/project/neuralcoref)
