@@ -4,9 +4,9 @@ import os
 from django.views.decorators.csrf import csrf_exempt
 import re
 from . import config
-from .models.neo_models import neo4j
+from .models.neo_models import Neo4j
 from .ner.ner import ner
-# from .QA.chatbot_graph import handler
+from .QA.chatbot_graph import handler
 from .models.query_db import query_db
 from .Relation_entity.inference import *
 import time
@@ -39,6 +39,7 @@ def upload_json(request):
 @csrf_exempt
 def attr(request, filename):
     data_json = dict()
+    neo4j = Neo4j()
     data_json["attri"] = neo4j.all_attr(filename)
     # print(data_json)
     return HttpResponse(json.dumps(data_json), content_type="application/json")
@@ -54,6 +55,7 @@ def create_graph(request, filename):
         # graph_info = request.POST.get("流程B")  # 获取前端创建的节点、关系信息
         num_progress = 0
         graph_info = json.loads(request.body)
+        neo4j = Neo4j()
         print(graph_info)
         neo4j.read_node(graph_info, filename)
         num_progress = 1
@@ -102,14 +104,14 @@ def nerText(request):
 
 @csrf_exempt
 def get_answer(request):
-    # if request.method == "POST":
-    #     question = request.POST.get("question")
-    #     print(question)
-    #     # handler = ChatBotGraph()
-    #     answer = handler.chat_main(question)
-    #     print('KG AI:', answer)
-    # return HttpResponse(answer, content_type="application/json")
-    return HttpResponse("pass")
+    if request.method == "POST":
+        question = request.POST.get("question")
+        print(question)
+        # handler = ChatBotGraph()
+        answer = handler.chat_main(question)
+        print('KG AI:', answer)
+    return HttpResponse(answer, content_type="application/json")
+    # return HttpResponse("pass")
 
 
 # 通过name属性查询一个node，以及和它有关的所有关系

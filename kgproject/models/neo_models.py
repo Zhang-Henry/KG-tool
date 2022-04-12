@@ -84,8 +84,8 @@ class Neo4j():
                     for item in data_dict[relation['label']]:
                         pair = [disease, item]
                         self.relation_list[relation['lineId']].append(pair)
-        # print(self.relation_list)
-        # print(self.entity_list)
+        print(self.relations)
+        print(self.entity_list)
 
     '''建立节点'''
 
@@ -144,4 +144,3 @@ class Neo4j():
             self.create_relationship(
                 start_name, end_name, v, rel_type, transName)
 
-neo4j = Neo4j()

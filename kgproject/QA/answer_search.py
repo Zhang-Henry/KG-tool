@@ -59,6 +59,7 @@ class AnswerSearcher:
                 subject, '；'.join(list(set(desc))[:self.num_limit]))
 
         elif question_type == 'disease_cureway':
+            print(answers)
             desc = [';'.join(i['m.cure_way']) for i in answers]
             subject = answers[0]['m.name']
             final_answer = '{0}可以尝试如下治疗：{1}'.format(
