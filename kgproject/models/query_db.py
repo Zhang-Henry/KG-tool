@@ -19,7 +19,7 @@ class Query_db():
     def query_labels_relations(self):
         # return the whole knowledge graph info
         label_list = Label.objects.filter(kg__name=cache.get('current_graph'))
-        rel_list = Label.objects.filter(kg__name=cache.get('current_graph'))
+        rel_list = Relation.objects.filter(kg__name=cache.get('current_graph'))
         labels = [label.name for label in label_list]
         rels = [rel.name for rel in rel_list]
         return labels, rels
