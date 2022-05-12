@@ -4,3 +4,4 @@ model.ckpt.data-00000-of-00001
 db.sqlite3
 __pycache__/
 *.pyc
+Pre.*
